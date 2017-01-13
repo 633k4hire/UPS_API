@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///C:/projects/DODGE/Release/ERDOCS/shipping/publish/assets/Code Samples/Web Services/Ship/Dot Net/ShipWSSample/ShipWSSample/Web References/ShipWebReference/IFWS.xsd" filename="IFWS.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///C:/projects/DODGE/Release/ERDOCS/shipping/publish/assets/Code Samples/Web Services/Ship/Dot Net/ShipWSSample/ShipWSSample/Web References/ShipWebReference/common.xsd" filename="common.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///C:/projects/DODGE/Release/ERDOCS/shipping/publish/assets/Code Samples/Web Services/Ship/Dot Net/ShipWSSample/ShipWSSample/Web References/ShipWebReference/Error1.1.xsd" filename="Error1.1.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="file:///C:/projects/DODGE/Release/ERDOCS/shipping/publish/assets/Code Samples/Web Services/Ship/Dot Net/ShipWSSample/ShipWSSample/Web References/ShipWebReference/ship.wsdl" filename="Ship.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///C:/projects/DODGE/Release/ERDOCS/shipping/publish/assets/Code Samples/Web Services/Ship/Dot Net/ShipWSSample/ShipWSSample/Web References/ShipWebReference/ShipWebServiceSchema.xsd" filename="ShipWebServiceSchema.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///C:/projects/DODGE/Release/ERDOCS/shipping/publish/assets/Code Samples/Web Services/Ship/Dot Net/ShipWSSample/ShipWSSample/Web References/ShipWebReference/UPSSecurity.xsd" filename="UPSSecurity.xsd" />
+  </Results>
+</DiscoveryClientResultsFile>

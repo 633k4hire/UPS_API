@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:error="http://www.ups.com/XMLSchema/XOLTWS/Error/v1.1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ups.com/WSDL/XOLTWS/Ship/v1.0" xmlns:ship="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0" xmlns:upss="http://www.ups.com/XMLSchema/XOLTWS/UPSS/v1.0" name="Ship" targetNamespace="http://www.ups.com/WSDL/XOLTWS/Ship/v1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import schemaLocation="UPSSecurity.xsd" namespace="http://www.ups.com/XMLSchema/XOLTWS/UPSS/v1.0" />
+      <xsd:import schemaLocation="Error1.1.xsd" namespace="http://www.ups.com/XMLSchema/XOLTWS/Error/v1.1" />
+      <xsd:import schemaLocation="ShipWebServiceSchema.xsd" namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ShipmentRequestMessage">
+    <wsdl:part name="Body" element="ship:ShipmentRequest" />
+    <wsdl:part name="UPSSecurity" element="upss:UPSSecurity" />
+  </wsdl:message>
+  <wsdl:message name="ShipmentResponseMessage">
+    <wsdl:part name="Body" element="ship:ShipmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ShipmentErrorMessage">
+    <wsdl:part name="ShipmentError" element="error:Errors" />
+  </wsdl:message>
+  <wsdl:message name="ShipConfirmRequestMessage">
+    <wsdl:part name="Body" element="ship:ShipConfirmRequest" />
+    <wsdl:part name="UPSSecurity" element="upss:UPSSecurity" />
+  </wsdl:message>
+  <wsdl:message name="ShipConfirmResponseMessage">
+    <wsdl:part name="Body" element="ship:ShipConfirmResponse" />
+  </wsdl:message>
+  <wsdl:message name="ShipConfirmErrorMessage">
+    <wsdl:part name="ShipConfirmError" element="error:Errors" />
+  </wsdl:message>
+  <wsdl:message name="ShipAcceptRequestMessage">
+    <wsdl:part name="Body" element="ship:ShipAcceptRequest" />
+    <wsdl:part name="UPSSecurity" element="upss:UPSSecurity" />
+  </wsdl:message>
+  <wsdl:message name="ShipAcceptResponseMessage">
+    <wsdl:part name="Body" element="ship:ShipAcceptResponse" />
+  </wsdl:message>
+  <wsdl:message name="ShipAcceptErrorMessage">
+    <wsdl:part name="ShipAcceptError" element="error:Errors" />
+  </wsdl:message>
+  <wsdl:portType name="ShipPortType">
+    <wsdl:operation name="ProcessShipment">
+      <wsdl:input name="ShipmentRequest" message="tns:ShipmentRequestMessage" />
+      <wsdl:output name="ShipmentResponse" message="tns:ShipmentResponseMessage" />
+      <wsdl:fault name="ShipmentError" message="tns:ShipmentErrorMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessShipConfirm">
+      <wsdl:input name="ShipConfirmRequest" message="tns:ShipConfirmRequestMessage" />
+      <wsdl:output name="ShipConfirmResponse" message="tns:ShipConfirmResponseMessage" />
+      <wsdl:fault name="ShipConfirmError" message="tns:ShipConfirmErrorMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessShipAccept">
+      <wsdl:input name="ShipAcceptRequest" message="tns:ShipAcceptRequestMessage" />
+      <wsdl:output name="ShipAcceptResponse" message="tns:ShipAcceptResponseMessage" />
+      <wsdl:fault name="ShipAcceptError" message="tns:ShipAcceptErrorMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ShipBinding" type="tns:ShipPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ProcessShipment">
+      <soap:operation soapAction="http://onlinetools.ups.com/webservices/ShipBinding/v1.0" style="document" />
+      <wsdl:input name="ShipmentRequest">
+        <soap:body use="literal" parts="Body" />
+        <soap:header message="tns:ShipmentRequestMessage" part="UPSSecurity" use="literal">
+          <soap:headerfault message="tns:ShipmentErrorMessage" part="ShipmentError" use="literal" />
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output name="ShipmentResponse">
+        <soap:body use="literal" parts="Body" />
+      </wsdl:output>
+      <wsdl:fault name="ShipmentError">
+        <soap:fault use="literal" name="ShipmentError" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessShipConfirm">
+      <soap:operation soapAction="http://onlinetools.ups.com/webservices/ShipBinding/v1.0" style="document" />
+      <wsdl:input name="ShipConfirmRequest">
+        <soap:body use="literal" parts="Body" />
+        <soap:header message="tns:ShipConfirmRequestMessage" part="UPSSecurity" use="literal">
+          <soap:headerfault message="tns:ShipConfirmErrorMessage" part="ShipConfirmError" use="literal" />
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output name="ShipConfirmResponse">
+        <soap:body use="literal" parts="Body" />
+      </wsdl:output>
+      <wsdl:fault name="ShipConfirmError">
+        <soap:fault use="literal" name="ShipConfirmError" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessShipAccept">
+      <soap:operation soapAction="http://onlinetools.ups.com/webservices/ShipBinding/v1.0" style="document" />
+      <wsdl:input name="ShipAcceptRequest">
+        <soap:body use="literal" parts="Body" />
+        <soap:header message="tns:ShipAcceptRequestMessage" part="UPSSecurity" use="literal">
+          <soap:headerfault message="tns:ShipAcceptErrorMessage" part="ShipAcceptError" use="literal" />
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output name="ShipAcceptResponse">
+        <soap:body use="literal" parts="Body" />
+      </wsdl:output>
+      <wsdl:fault name="ShipAcceptError">
+        <soap:fault use="literal" name="ShipAcceptError" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ShipService">
+    <wsdl:port name="ShipPort" binding="tns:ShipBinding">
+      <soap:address location="https://wwwcie.ups.com/webservices/Ship" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
