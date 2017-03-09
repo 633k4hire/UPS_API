@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///C:/Users/Matt/Documents/SHIPPING APIs/UPS/Time_In_Transit/TimeInTransit/TimeInTransitforPACKAGE/TIMEINTRANSITWebServices/CodeSamples/TimeInTransit/DotNet/TNTWSSample/TNTWSSample/Web References/TNTWebReference/Error1.1.xsd" filename="Error1.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///C:/Users/Matt/Documents/SHIPPING APIs/UPS/Time_In_Transit/TimeInTransit/TimeInTransitforPACKAGE/TIMEINTRANSITWebServices/CodeSamples/TimeInTransit/DotNet/TNTWSSample/TNTWSSample/Web References/TNTWebReference/UPSSecurity.xsd" filename="UPSSecurity.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="file:///C:/Users/Matt/Documents/SHIPPING APIs/UPS/Time_In_Transit/TimeInTransit/TimeInTransitforPACKAGE/TIMEINTRANSITWebServices/CodeSamples/TimeInTransit/DotNet/TNTWSSample/TNTWSSample/Web References/TNTWebReference/TNTWS.wsdl" filename="TimeInTransit.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///C:/Users/Matt/Documents/SHIPPING APIs/UPS/Time_In_Transit/TimeInTransit/TimeInTransitforPACKAGE/TIMEINTRANSITWebServices/CodeSamples/TimeInTransit/DotNet/TNTWSSample/TNTWSSample/Web References/TNTWebReference/TimeInTransitWebServiceSchema.xsd" filename="TimeInTransitWebServiceSchema.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="file:///C:/Users/Matt/Documents/SHIPPING APIs/UPS/Time_In_Transit/TimeInTransit/TimeInTransitforPACKAGE/TIMEINTRANSITWebServices/CodeSamples/TimeInTransit/DotNet/TNTWSSample/TNTWSSample/Web References/TNTWebReference/common.xsd" filename="common.xsd" />
+  </Results>
+</DiscoveryClientResultsFile>

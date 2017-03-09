@@ -26,24 +26,18 @@ namespace ShippingAPI.WebReference1 {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Web.Services.WebServiceBindingAttribute(Name="ShipBinding", Namespace="http://www.ups.com/WSDL/XOLTWS/Ship/v1.0")]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ShipmentServiceOptionsType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CompanyInfoType))]
-    public partial class ShipService : System.Web.Services.Protocols.SoapHttpClientProtocol {
+    [System.Web.Services.WebServiceBindingAttribute(Name="RateBinding", Namespace="http://www.ups.com/WSDL/XOLTWS/Rate/v1.1")]
+    public partial class RateService : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
         private UPSSecurity uPSSecurityValueField;
         
-        private System.Threading.SendOrPostCallback ProcessShipmentOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ProcessShipConfirmOperationCompleted;
-        
-        private System.Threading.SendOrPostCallback ProcessShipAcceptOperationCompleted;
+        private System.Threading.SendOrPostCallback ProcessRateOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
-        public ShipService() {
-            this.Url = global::ShippingAPI.Properties.Settings.Default.RateWSSample_WebReference1_ShipService;
+        public RateService() {
+            this.Url = global::ShippingAPI.Properties.Settings.Default.ShippingAPI_WebReference1_RateService;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
@@ -87,104 +81,36 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public event ProcessShipmentCompletedEventHandler ProcessShipmentCompleted;
-        
-        /// <remarks/>
-        public event ProcessShipConfirmCompletedEventHandler ProcessShipConfirmCompleted;
-        
-        /// <remarks/>
-        public event ProcessShipAcceptCompletedEventHandler ProcessShipAcceptCompleted;
+        public event ProcessRateCompletedEventHandler ProcessRateCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapHeaderAttribute("UPSSecurityValue")]
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://onlinetools.ups.com/webservices/ShipBinding/v1.0", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
-        [return: System.Xml.Serialization.XmlElementAttribute("ShipmentResponse", Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-        public ShipmentResponse ProcessShipment([System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")] ShipmentRequest ShipmentRequest) {
-            object[] results = this.Invoke("ProcessShipment", new object[] {
-                        ShipmentRequest});
-            return ((ShipmentResponse)(results[0]));
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://onlinetools.ups.com/webservices/RateBinding/v1.1", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("RateResponse", Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+        public RateResponse ProcessRate([System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")] RateRequest RateRequest) {
+            object[] results = this.Invoke("ProcessRate", new object[] {
+                        RateRequest});
+            return ((RateResponse)(results[0]));
         }
         
         /// <remarks/>
-        public void ProcessShipmentAsync(ShipmentRequest ShipmentRequest) {
-            this.ProcessShipmentAsync(ShipmentRequest, null);
+        public void ProcessRateAsync(RateRequest RateRequest) {
+            this.ProcessRateAsync(RateRequest, null);
         }
         
         /// <remarks/>
-        public void ProcessShipmentAsync(ShipmentRequest ShipmentRequest, object userState) {
-            if ((this.ProcessShipmentOperationCompleted == null)) {
-                this.ProcessShipmentOperationCompleted = new System.Threading.SendOrPostCallback(this.OnProcessShipmentOperationCompleted);
+        public void ProcessRateAsync(RateRequest RateRequest, object userState) {
+            if ((this.ProcessRateOperationCompleted == null)) {
+                this.ProcessRateOperationCompleted = new System.Threading.SendOrPostCallback(this.OnProcessRateOperationCompleted);
             }
-            this.InvokeAsync("ProcessShipment", new object[] {
-                        ShipmentRequest}, this.ProcessShipmentOperationCompleted, userState);
+            this.InvokeAsync("ProcessRate", new object[] {
+                        RateRequest}, this.ProcessRateOperationCompleted, userState);
         }
         
-        private void OnProcessShipmentOperationCompleted(object arg) {
-            if ((this.ProcessShipmentCompleted != null)) {
+        private void OnProcessRateOperationCompleted(object arg) {
+            if ((this.ProcessRateCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ProcessShipmentCompleted(this, new ProcessShipmentCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapHeaderAttribute("UPSSecurityValue")]
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://onlinetools.ups.com/webservices/ShipBinding/v1.0", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
-        [return: System.Xml.Serialization.XmlElementAttribute("ShipConfirmResponse", Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-        public ShipConfirmResponse ProcessShipConfirm([System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")] ShipConfirmRequest ShipConfirmRequest) {
-            object[] results = this.Invoke("ProcessShipConfirm", new object[] {
-                        ShipConfirmRequest});
-            return ((ShipConfirmResponse)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ProcessShipConfirmAsync(ShipConfirmRequest ShipConfirmRequest) {
-            this.ProcessShipConfirmAsync(ShipConfirmRequest, null);
-        }
-        
-        /// <remarks/>
-        public void ProcessShipConfirmAsync(ShipConfirmRequest ShipConfirmRequest, object userState) {
-            if ((this.ProcessShipConfirmOperationCompleted == null)) {
-                this.ProcessShipConfirmOperationCompleted = new System.Threading.SendOrPostCallback(this.OnProcessShipConfirmOperationCompleted);
-            }
-            this.InvokeAsync("ProcessShipConfirm", new object[] {
-                        ShipConfirmRequest}, this.ProcessShipConfirmOperationCompleted, userState);
-        }
-        
-        private void OnProcessShipConfirmOperationCompleted(object arg) {
-            if ((this.ProcessShipConfirmCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ProcessShipConfirmCompleted(this, new ProcessShipConfirmCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapHeaderAttribute("UPSSecurityValue")]
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://onlinetools.ups.com/webservices/ShipBinding/v1.0", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
-        [return: System.Xml.Serialization.XmlElementAttribute("ShipAcceptResponse", Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-        public ShipAcceptResponse ProcessShipAccept([System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")] ShipAcceptRequest ShipAcceptRequest) {
-            object[] results = this.Invoke("ProcessShipAccept", new object[] {
-                        ShipAcceptRequest});
-            return ((ShipAcceptResponse)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void ProcessShipAcceptAsync(ShipAcceptRequest ShipAcceptRequest) {
-            this.ProcessShipAcceptAsync(ShipAcceptRequest, null);
-        }
-        
-        /// <remarks/>
-        public void ProcessShipAcceptAsync(ShipAcceptRequest ShipAcceptRequest, object userState) {
-            if ((this.ProcessShipAcceptOperationCompleted == null)) {
-                this.ProcessShipAcceptOperationCompleted = new System.Threading.SendOrPostCallback(this.OnProcessShipAcceptOperationCompleted);
-            }
-            this.InvokeAsync("ProcessShipAccept", new object[] {
-                        ShipAcceptRequest}, this.ProcessShipAcceptOperationCompleted, userState);
-        }
-        
-        private void OnProcessShipAcceptOperationCompleted(object arg) {
-            if ((this.ProcessShipAcceptCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.ProcessShipAcceptCompleted(this, new ProcessShipAcceptCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.ProcessRateCompleted(this, new ProcessRateCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -279,53 +205,147 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class HighValueReportType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class EstimatedArrivalType {
         
-        private ImageType imageField;
+        private PickupType arrivalField;
+        
+        private string businessDaysInTransitField;
+        
+        private PickupType pickupField;
+        
+        private string dayOfWeekField;
+        
+        private string customerCenterCutoffField;
+        
+        private string delayCountField;
+        
+        private string holidayCountField;
+        
+        private string restDaysField;
+        
+        private string totalTransitDaysField;
         
         /// <remarks/>
-        public ImageType Image {
+        public PickupType Arrival {
             get {
-                return this.imageField;
+                return this.arrivalField;
             }
             set {
-                this.imageField = value;
+                this.arrivalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string BusinessDaysInTransit {
+            get {
+                return this.businessDaysInTransitField;
+            }
+            set {
+                this.businessDaysInTransitField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public PickupType Pickup {
+            get {
+                return this.pickupField;
+            }
+            set {
+                this.pickupField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DayOfWeek {
+            get {
+                return this.dayOfWeekField;
+            }
+            set {
+                this.dayOfWeekField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CustomerCenterCutoff {
+            get {
+                return this.customerCenterCutoffField;
+            }
+            set {
+                this.customerCenterCutoffField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DelayCount {
+            get {
+                return this.delayCountField;
+            }
+            set {
+                this.delayCountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string HolidayCount {
+            get {
+                return this.holidayCountField;
+            }
+            set {
+                this.holidayCountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string RestDays {
+            get {
+                return this.restDaysField;
+            }
+            set {
+                this.restDaysField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TotalTransitDays {
+            get {
+                return this.totalTransitDaysField;
+            }
+            set {
+                this.totalTransitDaysField = value;
             }
         }
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ReceiptType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LabelType))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ImageType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class PickupType {
         
-        private ImageFormatType imageFormatField;
+        private string dateField;
         
-        private string graphicImageField;
+        private string timeField;
         
         /// <remarks/>
-        public ImageFormatType ImageFormat {
+        public string Date {
             get {
-                return this.imageFormatField;
+                return this.dateField;
             }
             set {
-                this.imageFormatField = value;
+                this.dateField = value;
             }
         }
         
         /// <remarks/>
-        public string GraphicImage {
+        public string Time {
             get {
-                return this.graphicImageField;
+                return this.timeField;
             }
             set {
-                this.graphicImageField = value;
+                this.timeField = value;
             }
         }
     }
@@ -335,8 +355,89 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ImageFormatType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ServiceSummaryType {
+        
+        private CodeDescriptionType serviceField;
+        
+        private string guaranteedIndicatorField;
+        
+        private string disclaimerField;
+        
+        private EstimatedArrivalType estimatedArrivalField;
+        
+        private string saturdayDeliveryField;
+        
+        private string saturdayDeliveryDisclaimerField;
+        
+        /// <remarks/>
+        public CodeDescriptionType Service {
+            get {
+                return this.serviceField;
+            }
+            set {
+                this.serviceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GuaranteedIndicator {
+            get {
+                return this.guaranteedIndicatorField;
+            }
+            set {
+                this.guaranteedIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Disclaimer {
+            get {
+                return this.disclaimerField;
+            }
+            set {
+                this.disclaimerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public EstimatedArrivalType EstimatedArrival {
+            get {
+                return this.estimatedArrivalField;
+            }
+            set {
+                this.estimatedArrivalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SaturdayDelivery {
+            get {
+                return this.saturdayDeliveryField;
+            }
+            set {
+                this.saturdayDeliveryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SaturdayDeliveryDisclaimer {
+            get {
+                return this.saturdayDeliveryDisclaimerField;
+            }
+            set {
+                this.saturdayDeliveryDisclaimerField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class CodeDescriptionType {
         
         private string codeField;
         
@@ -368,105 +469,79 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ReceiptType : ImageType {
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class LabelType : ImageType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class TimeInTransitResponseType {
         
-        private string internationalSignatureGraphicImageField;
+        private string pickupDateField;
         
-        private string hTMLImageField;
+        private string documentsOnlyIndicatorField;
         
-        private string pDF417Field;
+        private string packageBillTypeField;
+        
+        private ServiceSummaryType[] serviceSummaryField;
+        
+        private string autoDutyCodeField;
+        
+        private string disclaimerField;
         
         /// <remarks/>
-        public string InternationalSignatureGraphicImage {
+        public string PickupDate {
             get {
-                return this.internationalSignatureGraphicImageField;
+                return this.pickupDateField;
             }
             set {
-                this.internationalSignatureGraphicImageField = value;
+                this.pickupDateField = value;
             }
         }
         
         /// <remarks/>
-        public string HTMLImage {
+        public string DocumentsOnlyIndicator {
             get {
-                return this.hTMLImageField;
+                return this.documentsOnlyIndicatorField;
             }
             set {
-                this.hTMLImageField = value;
+                this.documentsOnlyIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        public string PDF417 {
+        public string PackageBillType {
             get {
-                return this.pDF417Field;
+                return this.packageBillTypeField;
             }
             set {
-                this.pDF417Field = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class SCReportType {
-        
-        private ImageType imageField;
-        
-        /// <remarks/>
-        public ImageType Image {
-            get {
-                return this.imageField;
-            }
-            set {
-                this.imageField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class FormImageType {
-        
-        private ImageFormatType imageFormatField;
-        
-        private string graphicImageField;
-        
-        /// <remarks/>
-        public ImageFormatType ImageFormat {
-            get {
-                return this.imageFormatField;
-            }
-            set {
-                this.imageFormatField = value;
+                this.packageBillTypeField = value;
             }
         }
         
         /// <remarks/>
-        public string GraphicImage {
+        [System.Xml.Serialization.XmlElementAttribute("ServiceSummary")]
+        public ServiceSummaryType[] ServiceSummary {
             get {
-                return this.graphicImageField;
+                return this.serviceSummaryField;
             }
             set {
-                this.graphicImageField = value;
+                this.serviceSummaryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AutoDutyCode {
+            get {
+                return this.autoDutyCodeField;
+            }
+            set {
+                this.autoDutyCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Disclaimer {
+            get {
+                return this.disclaimerField;
+            }
+            set {
+                this.disclaimerField = value;
             }
         }
     }
@@ -476,76 +551,7 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class FormType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        private FormImageType imageField;
-        
-        private string formGroupIdField;
-        
-        private string formGroupIdNameField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public FormImageType Image {
-            get {
-                return this.imageField;
-            }
-            set {
-                this.imageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FormGroupId {
-            get {
-                return this.formGroupIdField;
-            }
-            set {
-                this.formGroupIdField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FormGroupIdName {
-            get {
-                return this.formGroupIdNameField;
-            }
-            set {
-                this.formGroupIdNameField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class AccessorialType {
         
         private string codeField;
@@ -578,43 +584,39 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PackageResultsType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class RatedPackageType {
         
-        private string trackingNumberField;
+        private ChargesType transportationChargesField;
         
-        private ShipChargeType baseServiceChargeField;
+        private ChargesType baseServiceChargeField;
         
-        private ShipChargeType serviceOptionsChargesField;
+        private ChargesType serviceOptionsChargesField;
         
-        private LabelType shippingLabelField;
+        private ChargesType totalChargesField;
         
-        private ReceiptType shippingReceiptField;
+        private string weightField;
         
-        private string uSPSPICNumberField;
-        
-        private string cN22NumberField;
+        private BillingWeightType billingWeightField;
         
         private AccessorialType[] accessorialField;
         
-        private FormType formField;
+        private ChargesType[] itemizedChargesField;
         
-        private ShipChargeType[] itemizedChargesField;
-        
-        private ShipChargeType[] negotiatedChargesField;
+        private ChargesType[] negotiatedChargesField;
         
         /// <remarks/>
-        public string TrackingNumber {
+        public ChargesType TransportationCharges {
             get {
-                return this.trackingNumberField;
+                return this.transportationChargesField;
             }
             set {
-                this.trackingNumberField = value;
+                this.transportationChargesField = value;
             }
         }
         
         /// <remarks/>
-        public ShipChargeType BaseServiceCharge {
+        public ChargesType BaseServiceCharge {
             get {
                 return this.baseServiceChargeField;
             }
@@ -624,7 +626,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public ShipChargeType ServiceOptionsCharges {
+        public ChargesType ServiceOptionsCharges {
             get {
                 return this.serviceOptionsChargesField;
             }
@@ -634,42 +636,32 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public LabelType ShippingLabel {
+        public ChargesType TotalCharges {
             get {
-                return this.shippingLabelField;
+                return this.totalChargesField;
             }
             set {
-                this.shippingLabelField = value;
+                this.totalChargesField = value;
             }
         }
         
         /// <remarks/>
-        public ReceiptType ShippingReceipt {
+        public string Weight {
             get {
-                return this.shippingReceiptField;
+                return this.weightField;
             }
             set {
-                this.shippingReceiptField = value;
+                this.weightField = value;
             }
         }
         
         /// <remarks/>
-        public string USPSPICNumber {
+        public BillingWeightType BillingWeight {
             get {
-                return this.uSPSPICNumberField;
+                return this.billingWeightField;
             }
             set {
-                this.uSPSPICNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CN22Number {
-            get {
-                return this.cN22NumberField;
-            }
-            set {
-                this.cN22NumberField = value;
+                this.billingWeightField = value;
             }
         }
         
@@ -685,18 +677,8 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public FormType Form {
-            get {
-                return this.formField;
-            }
-            set {
-                this.formField = value;
-            }
-        }
-        
-        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ItemizedCharges")]
-        public ShipChargeType[] ItemizedCharges {
+        public ChargesType[] ItemizedCharges {
             get {
                 return this.itemizedChargesField;
             }
@@ -707,7 +689,7 @@ namespace ShippingAPI.WebReference1 {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ItemizedCharges", IsNullable=false)]
-        public ShipChargeType[] NegotiatedCharges {
+        public ChargesType[] NegotiatedCharges {
             get {
                 return this.negotiatedChargesField;
             }
@@ -722,8 +704,8 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipChargeType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ChargesType {
         
         private string codeField;
         
@@ -791,48 +773,15 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class BillingUnitOfMeasurementType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class BillingWeightType {
         
-        private BillingUnitOfMeasurementType unitOfMeasurementField;
+        private CodeDescriptionType unitOfMeasurementField;
         
         private string weightField;
         
         /// <remarks/>
-        public BillingUnitOfMeasurementType UnitOfMeasurement {
+        public CodeDescriptionType UnitOfMeasurement {
             get {
                 return this.unitOfMeasurementField;
             }
@@ -857,12 +806,137 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class GuaranteedDeliveryType {
+        
+        private string businessDaysInTransitField;
+        
+        private string deliveryByTimeField;
+        
+        /// <remarks/>
+        public string BusinessDaysInTransit {
+            get {
+                return this.businessDaysInTransitField;
+            }
+            set {
+                this.businessDaysInTransitField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DeliveryByTime {
+            get {
+                return this.deliveryByTimeField;
+            }
+            set {
+                this.deliveryByTimeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class TotalChargeType {
+        
+        private ChargesType[] itemizedChargesField;
+        
+        private TaxChargeType[] taxChargesField;
+        
+        private ChargesType totalChargeField;
+        
+        private ChargesType totalChargesWithTaxesField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ItemizedCharges")]
+        public ChargesType[] ItemizedCharges {
+            get {
+                return this.itemizedChargesField;
+            }
+            set {
+                this.itemizedChargesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("TaxCharges")]
+        public TaxChargeType[] TaxCharges {
+            get {
+                return this.taxChargesField;
+            }
+            set {
+                this.taxChargesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ChargesType TotalCharge {
+            get {
+                return this.totalChargeField;
+            }
+            set {
+                this.totalChargeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ChargesType TotalChargesWithTaxes {
+            get {
+                return this.totalChargesWithTaxesField;
+            }
+            set {
+                this.totalChargesWithTaxesField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class TaxChargeType {
+        
+        private string typeField;
+        
+        private string monetaryValueField;
+        
+        /// <remarks/>
+        public string Type {
+            get {
+                return this.typeField;
+            }
+            set {
+                this.typeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MonetaryValue {
+            get {
+                return this.monetaryValueField;
+            }
+            set {
+                this.monetaryValueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class HandlingUnitsResponseType {
         
         private string quantityField;
         
-        private ShipUnitOfMeasurementType typeField;
+        private CodeDescriptionType typeField;
         
         private HandlingUnitsDimensionsType dimensionsField;
         
@@ -879,7 +953,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public ShipUnitOfMeasurementType Type {
+        public CodeDescriptionType Type {
             get {
                 return this.typeField;
             }
@@ -914,43 +988,10 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipUnitOfMeasurementType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class HandlingUnitsDimensionsType {
         
-        private ShipUnitOfMeasurementType unitOfMeasurementField;
+        private CodeDescriptionType unitOfMeasurementField;
         
         private string lengthField;
         
@@ -959,7 +1000,7 @@ namespace ShippingAPI.WebReference1 {
         private string heightField;
         
         /// <remarks/>
-        public ShipUnitOfMeasurementType UnitOfMeasurement {
+        public CodeDescriptionType UnitOfMeasurement {
             get {
                 return this.unitOfMeasurementField;
             }
@@ -1004,12 +1045,12 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class AdjustedHeightType {
         
         private string valueField;
         
-        private ShipUnitOfMeasurementType unitOfMeasurementField;
+        private CodeDescriptionType unitOfMeasurementField;
         
         /// <remarks/>
         public string Value {
@@ -1022,7 +1063,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public ShipUnitOfMeasurementType UnitOfMeasurement {
+        public CodeDescriptionType UnitOfMeasurement {
             get {
                 return this.unitOfMeasurementField;
             }
@@ -1037,7 +1078,7 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class FreightDensityRateType {
         
         private string densityField;
@@ -1070,19 +1111,19 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class TransportationChargeType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class TransportationChargesType {
         
-        private ShipChargeType grossChargeField;
+        private ChargesType grossChargeField;
         
-        private ShipChargeType discountAmountField;
+        private ChargesType discountAmountField;
         
         private string discountPercentageField;
         
-        private ShipChargeType netChargeField;
+        private ChargesType netChargeField;
         
         /// <remarks/>
-        public ShipChargeType GrossCharge {
+        public ChargesType GrossCharge {
             get {
                 return this.grossChargeField;
             }
@@ -1092,7 +1133,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public ShipChargeType DiscountAmount {
+        public ChargesType DiscountAmount {
             get {
                 return this.discountAmountField;
             }
@@ -1112,7 +1153,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public ShipChargeType NetCharge {
+        public ChargesType NetCharge {
             get {
                 return this.netChargeField;
             }
@@ -1127,17 +1168,17 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class FRSShipmentDataType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class FRSShipmentType {
         
-        private TransportationChargeType transportationChargesField;
+        private TransportationChargesType transportationChargesField;
         
         private FreightDensityRateType freightDensityRateField;
         
         private HandlingUnitsResponseType[] handlingUnitsField;
         
         /// <remarks/>
-        public TransportationChargeType TransportationCharges {
+        public TransportationChargesType TransportationCharges {
             get {
                 return this.transportationChargesField;
             }
@@ -1173,56 +1214,30 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class NegotiatedRateChargesType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class RatedShipmentInfoType {
         
-        private ShipChargeType[] itemizedChargesField;
+        private string codeField;
         
-        private TaxChargeType[] taxChargesField;
-        
-        private ShipChargeType totalChargeField;
-        
-        private ShipChargeType totalChargesWithTaxesField;
+        private string descriptionField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ItemizedCharges")]
-        public ShipChargeType[] ItemizedCharges {
+        public string Code {
             get {
-                return this.itemizedChargesField;
+                return this.codeField;
             }
             set {
-                this.itemizedChargesField = value;
+                this.codeField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("TaxCharges")]
-        public TaxChargeType[] TaxCharges {
+        public string Description {
             get {
-                return this.taxChargesField;
+                return this.descriptionField;
             }
             set {
-                this.taxChargesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipChargeType TotalCharge {
-            get {
-                return this.totalChargeField;
-            }
-            set {
-                this.totalChargeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipChargeType TotalChargesWithTaxes {
-            get {
-                return this.totalChargesWithTaxesField;
-            }
-            set {
-                this.totalChargesWithTaxesField = value;
+                this.descriptionField = value;
             }
         }
     }
@@ -1232,147 +1247,7 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class TaxChargeType {
-        
-        private string typeField;
-        
-        private string monetaryValueField;
-        
-        /// <remarks/>
-        public string Type {
-            get {
-                return this.typeField;
-            }
-            set {
-                this.typeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MonetaryValue {
-            get {
-                return this.monetaryValueField;
-            }
-            set {
-                this.monetaryValueField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipmentChargesType {
-        
-        private string rateChartField;
-        
-        private ShipChargeType baseServiceChargeField;
-        
-        private ShipChargeType transportationChargesField;
-        
-        private ShipChargeType[] itemizedChargesField;
-        
-        private ShipChargeType serviceOptionsChargesField;
-        
-        private TaxChargeType[] taxChargesField;
-        
-        private ShipChargeType totalChargesField;
-        
-        private ShipChargeType totalChargesWithTaxesField;
-        
-        /// <remarks/>
-        public string RateChart {
-            get {
-                return this.rateChartField;
-            }
-            set {
-                this.rateChartField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipChargeType BaseServiceCharge {
-            get {
-                return this.baseServiceChargeField;
-            }
-            set {
-                this.baseServiceChargeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipChargeType TransportationCharges {
-            get {
-                return this.transportationChargesField;
-            }
-            set {
-                this.transportationChargesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ItemizedCharges")]
-        public ShipChargeType[] ItemizedCharges {
-            get {
-                return this.itemizedChargesField;
-            }
-            set {
-                this.itemizedChargesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipChargeType ServiceOptionsCharges {
-            get {
-                return this.serviceOptionsChargesField;
-            }
-            set {
-                this.serviceOptionsChargesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("TaxCharges")]
-        public TaxChargeType[] TaxCharges {
-            get {
-                return this.taxChargesField;
-            }
-            set {
-                this.taxChargesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipChargeType TotalCharges {
-            get {
-                return this.totalChargesField;
-            }
-            set {
-                this.totalChargesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipChargeType TotalChargesWithTaxes {
-            get {
-                return this.totalChargesWithTaxesField;
-            }
-            set {
-                this.totalChargesWithTaxesField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class DisclaimerType {
         
         private string codeField;
@@ -1405,46 +1280,46 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipmentResultsType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class RatedShipmentType {
         
         private DisclaimerType[] disclaimerField;
         
-        private ShipmentChargesType shipmentChargesField;
+        private CodeDescriptionType serviceField;
         
-        private NegotiatedRateChargesType negotiatedRateChargesField;
+        private string rateChartField;
         
-        private FRSShipmentDataType fRSShipmentDataField;
-        
-        private string ratingMethodField;
+        private RatedShipmentInfoType[] ratedShipmentAlertField;
         
         private string billableWeightCalculationMethodField;
         
+        private string ratingMethodField;
+        
         private BillingWeightType billingWeightField;
         
-        private string shipmentIdentificationNumberField;
+        private ChargesType transportationChargesField;
         
-        private string mIDualReturnShipmentKeyField;
+        private ChargesType baseServiceChargeField;
         
-        private string shipmentDigestField;
+        private ChargesType[] itemizedChargesField;
         
-        private PackageResultsType[] packageResultsField;
+        private FRSShipmentType fRSShipmentDataField;
         
-        private ImageType[] controlLogReceiptField;
+        private ChargesType serviceOptionsChargesField;
         
-        private FormType formField;
+        private TaxChargeType[] taxChargesField;
         
-        private SCReportType cODTurnInPageField;
+        private ChargesType totalChargesField;
         
-        private HighValueReportType highValueReportField;
+        private ChargesType totalChargesWithTaxesField;
         
-        private string labelURLField;
+        private TotalChargeType negotiatedRateChargesField;
         
-        private string localLanguageLabelURLField;
+        private GuaranteedDeliveryType guaranteedDeliveryField;
         
-        private string receiptURLField;
+        private RatedPackageType[] ratedPackageField;
         
-        private string localLanguageReceiptURLField;
+        private TimeInTransitResponseType timeInTransitField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Disclaimer")]
@@ -1458,42 +1333,33 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public ShipmentChargesType ShipmentCharges {
+        public CodeDescriptionType Service {
             get {
-                return this.shipmentChargesField;
+                return this.serviceField;
             }
             set {
-                this.shipmentChargesField = value;
+                this.serviceField = value;
             }
         }
         
         /// <remarks/>
-        public NegotiatedRateChargesType NegotiatedRateCharges {
+        public string RateChart {
             get {
-                return this.negotiatedRateChargesField;
+                return this.rateChartField;
             }
             set {
-                this.negotiatedRateChargesField = value;
+                this.rateChartField = value;
             }
         }
         
         /// <remarks/>
-        public FRSShipmentDataType FRSShipmentData {
+        [System.Xml.Serialization.XmlElementAttribute("RatedShipmentAlert")]
+        public RatedShipmentInfoType[] RatedShipmentAlert {
             get {
-                return this.fRSShipmentDataField;
+                return this.ratedShipmentAlertField;
             }
             set {
-                this.fRSShipmentDataField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string RatingMethod {
-            get {
-                return this.ratingMethodField;
-            }
-            set {
-                this.ratingMethodField = value;
+                this.ratedShipmentAlertField = value;
             }
         }
         
@@ -1508,6 +1374,16 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
+        public string RatingMethod {
+            get {
+                return this.ratingMethodField;
+            }
+            set {
+                this.ratingMethodField = value;
+            }
+        }
+        
+        /// <remarks/>
         public BillingWeightType BillingWeight {
             get {
                 return this.billingWeightField;
@@ -1518,124 +1394,125 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public string ShipmentIdentificationNumber {
+        public ChargesType TransportationCharges {
             get {
-                return this.shipmentIdentificationNumberField;
+                return this.transportationChargesField;
             }
             set {
-                this.shipmentIdentificationNumberField = value;
+                this.transportationChargesField = value;
             }
         }
         
         /// <remarks/>
-        public string MIDualReturnShipmentKey {
+        public ChargesType BaseServiceCharge {
             get {
-                return this.mIDualReturnShipmentKeyField;
+                return this.baseServiceChargeField;
             }
             set {
-                this.mIDualReturnShipmentKeyField = value;
+                this.baseServiceChargeField = value;
             }
         }
         
         /// <remarks/>
-        public string ShipmentDigest {
+        [System.Xml.Serialization.XmlElementAttribute("ItemizedCharges")]
+        public ChargesType[] ItemizedCharges {
             get {
-                return this.shipmentDigestField;
+                return this.itemizedChargesField;
             }
             set {
-                this.shipmentDigestField = value;
+                this.itemizedChargesField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PackageResults")]
-        public PackageResultsType[] PackageResults {
+        public FRSShipmentType FRSShipmentData {
             get {
-                return this.packageResultsField;
+                return this.fRSShipmentDataField;
             }
             set {
-                this.packageResultsField = value;
+                this.fRSShipmentDataField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ControlLogReceipt")]
-        public ImageType[] ControlLogReceipt {
+        public ChargesType ServiceOptionsCharges {
             get {
-                return this.controlLogReceiptField;
+                return this.serviceOptionsChargesField;
             }
             set {
-                this.controlLogReceiptField = value;
+                this.serviceOptionsChargesField = value;
             }
         }
         
         /// <remarks/>
-        public FormType Form {
+        [System.Xml.Serialization.XmlElementAttribute("TaxCharges")]
+        public TaxChargeType[] TaxCharges {
             get {
-                return this.formField;
+                return this.taxChargesField;
             }
             set {
-                this.formField = value;
+                this.taxChargesField = value;
             }
         }
         
         /// <remarks/>
-        public SCReportType CODTurnInPage {
+        public ChargesType TotalCharges {
             get {
-                return this.cODTurnInPageField;
+                return this.totalChargesField;
             }
             set {
-                this.cODTurnInPageField = value;
+                this.totalChargesField = value;
             }
         }
         
         /// <remarks/>
-        public HighValueReportType HighValueReport {
+        public ChargesType TotalChargesWithTaxes {
             get {
-                return this.highValueReportField;
+                return this.totalChargesWithTaxesField;
             }
             set {
-                this.highValueReportField = value;
+                this.totalChargesWithTaxesField = value;
             }
         }
         
         /// <remarks/>
-        public string LabelURL {
+        public TotalChargeType NegotiatedRateCharges {
             get {
-                return this.labelURLField;
+                return this.negotiatedRateChargesField;
             }
             set {
-                this.labelURLField = value;
+                this.negotiatedRateChargesField = value;
             }
         }
         
         /// <remarks/>
-        public string LocalLanguageLabelURL {
+        public GuaranteedDeliveryType GuaranteedDelivery {
             get {
-                return this.localLanguageLabelURLField;
+                return this.guaranteedDeliveryField;
             }
             set {
-                this.localLanguageLabelURLField = value;
+                this.guaranteedDeliveryField = value;
             }
         }
         
         /// <remarks/>
-        public string ReceiptURL {
+        [System.Xml.Serialization.XmlElementAttribute("RatedPackage")]
+        public RatedPackageType[] RatedPackage {
             get {
-                return this.receiptURLField;
+                return this.ratedPackageField;
             }
             set {
-                this.receiptURLField = value;
+                this.ratedPackageField = value;
             }
         }
         
         /// <remarks/>
-        public string LocalLanguageReceiptURL {
+        public TimeInTransitResponseType TimeInTransit {
             get {
-                return this.localLanguageReceiptURLField;
+                return this.timeInTransitField;
             }
             set {
-                this.localLanguageReceiptURLField = value;
+                this.timeInTransitField = value;
             }
         }
     }
@@ -1757,8 +1634,8 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0")]
-    public partial class CodeDescriptionType {
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="CodeDescriptionType", Namespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0")]
+    public partial class CodeDescriptionType1 {
         
         private string codeField;
         
@@ -1793,16 +1670,16 @@ namespace ShippingAPI.WebReference1 {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0")]
     public partial class ResponseType {
         
-        private CodeDescriptionType responseStatusField;
+        private CodeDescriptionType1 responseStatusField;
         
-        private CodeDescriptionType[] alertField;
+        private CodeDescriptionType1[] alertField;
         
         private DetailType[] alertDetailField;
         
         private TransactionReferenceType transactionReferenceField;
         
         /// <remarks/>
-        public CodeDescriptionType ResponseStatus {
+        public CodeDescriptionType1 ResponseStatus {
             get {
                 return this.responseStatusField;
             }
@@ -1813,7 +1690,7 @@ namespace ShippingAPI.WebReference1 {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Alert")]
-        public CodeDescriptionType[] Alert {
+        public CodeDescriptionType1[] Alert {
             get {
                 return this.alertField;
             }
@@ -1882,8 +1759,164 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ReceiptImageFormatType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class TimeInTransitRequestType {
+        
+        private string packageBillTypeField;
+        
+        private PickupType pickupField;
+        
+        /// <remarks/>
+        public string PackageBillType {
+            get {
+                return this.packageBillTypeField;
+            }
+            set {
+                this.packageBillTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public PickupType Pickup {
+            get {
+                return this.pickupField;
+            }
+            set {
+                this.pickupField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class PromotionalDiscountInformationType {
+        
+        private string promoCodeField;
+        
+        private string promoAliasCodeField;
+        
+        /// <remarks/>
+        public string PromoCode {
+            get {
+                return this.promoCodeField;
+            }
+            set {
+                this.promoCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PromoAliasCode {
+            get {
+                return this.promoAliasCodeField;
+            }
+            set {
+                this.promoAliasCodeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class InvoiceLineTotalType {
+        
+        private string currencyCodeField;
+        
+        private string monetaryValueField;
+        
+        /// <remarks/>
+        public string CurrencyCode {
+            get {
+                return this.currencyCodeField;
+            }
+            set {
+                this.currencyCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MonetaryValue {
+            get {
+                return this.monetaryValueField;
+            }
+            set {
+                this.monetaryValueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipmentRatingOptionsType {
+        
+        private string negotiatedRatesIndicatorField;
+        
+        private string fRSShipmentIndicatorField;
+        
+        private string rateChartIndicatorField;
+        
+        private string userLevelDiscountIndicatorField;
+        
+        /// <remarks/>
+        public string NegotiatedRatesIndicator {
+            get {
+                return this.negotiatedRatesIndicatorField;
+            }
+            set {
+                this.negotiatedRatesIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FRSShipmentIndicator {
+            get {
+                return this.fRSShipmentIndicatorField;
+            }
+            set {
+                this.fRSShipmentIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string RateChartIndicator {
+            get {
+                return this.rateChartIndicatorField;
+            }
+            set {
+                this.rateChartIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string UserLevelDiscountIndicator {
+            get {
+                return this.userLevelDiscountIndicatorField;
+            }
+            set {
+                this.userLevelDiscountIndicatorField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ReturnServiceType {
         
         private string codeField;
         
@@ -1915,29 +1948,8 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ReceiptSpecificationType {
-        
-        private ReceiptImageFormatType imageFormatField;
-        
-        /// <remarks/>
-        public ReceiptImageFormatType ImageFormat {
-            get {
-                return this.imageFormatField;
-            }
-            set {
-                this.imageFormatField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class InstructionCodeDescriptionType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ImportControlType {
         
         private string codeField;
         
@@ -1969,121 +1981,90 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class LabelStockSizeType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class RestrictedArticlesType {
         
-        private string heightField;
+        private string alcoholicBeveragesIndicatorField;
         
-        private string widthField;
+        private string diagnosticSpecimensIndicatorField;
+        
+        private string perishablesIndicatorField;
+        
+        private string plantsIndicatorField;
+        
+        private string seedsIndicatorField;
+        
+        private string specialExceptionsIndicatorField;
+        
+        private string tobaccoIndicatorField;
         
         /// <remarks/>
-        public string Height {
+        public string AlcoholicBeveragesIndicator {
             get {
-                return this.heightField;
+                return this.alcoholicBeveragesIndicatorField;
             }
             set {
-                this.heightField = value;
+                this.alcoholicBeveragesIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        public string Width {
+        public string DiagnosticSpecimensIndicator {
             get {
-                return this.widthField;
+                return this.diagnosticSpecimensIndicatorField;
             }
             set {
-                this.widthField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class LabelImageFormatType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
+                this.diagnosticSpecimensIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        public string Description {
+        public string PerishablesIndicator {
             get {
-                return this.descriptionField;
+                return this.perishablesIndicatorField;
             }
             set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class LabelSpecificationType {
-        
-        private LabelImageFormatType labelImageFormatField;
-        
-        private string hTTPUserAgentField;
-        
-        private LabelStockSizeType labelStockSizeField;
-        
-        private InstructionCodeDescriptionType[] instructionField;
-        
-        /// <remarks/>
-        public LabelImageFormatType LabelImageFormat {
-            get {
-                return this.labelImageFormatField;
-            }
-            set {
-                this.labelImageFormatField = value;
+                this.perishablesIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        public string HTTPUserAgent {
+        public string PlantsIndicator {
             get {
-                return this.hTTPUserAgentField;
+                return this.plantsIndicatorField;
             }
             set {
-                this.hTTPUserAgentField = value;
+                this.plantsIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        public LabelStockSizeType LabelStockSize {
+        public string SeedsIndicator {
             get {
-                return this.labelStockSizeField;
+                return this.seedsIndicatorField;
             }
             set {
-                this.labelStockSizeField = value;
+                this.seedsIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Instruction")]
-        public InstructionCodeDescriptionType[] Instruction {
+        public string SpecialExceptionsIndicator {
             get {
-                return this.instructionField;
+                return this.specialExceptionsIndicatorField;
             }
             set {
-                this.instructionField = value;
+                this.specialExceptionsIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TobaccoIndicator {
+            get {
+                return this.tobaccoIndicatorField;
+            }
+            set {
+                this.tobaccoIndicatorField = value;
             }
         }
     }
@@ -2093,42 +2074,30 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class HazMatPackageInformationType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class DeliveryOptionsType {
         
-        private string allPackedInOneIndicatorField;
+        private string liftGateAtDeliveryIndicatorField;
         
-        private string overPackedIndicatorField;
-        
-        private string qValueField;
+        private string dropOffAtUPSFacilityIndicatorField;
         
         /// <remarks/>
-        public string AllPackedInOneIndicator {
+        public string LiftGateAtDeliveryIndicator {
             get {
-                return this.allPackedInOneIndicatorField;
+                return this.liftGateAtDeliveryIndicatorField;
             }
             set {
-                this.allPackedInOneIndicatorField = value;
+                this.liftGateAtDeliveryIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        public string OverPackedIndicator {
+        public string DropOffAtUPSFacilityIndicator {
             get {
-                return this.overPackedIndicatorField;
+                return this.dropOffAtUPSFacilityIndicatorField;
             }
             set {
-                this.overPackedIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string QValue {
-            get {
-                return this.qValueField;
-            }
-            set {
-                this.qValueField = value;
+                this.dropOffAtUPSFacilityIndicatorField = value;
             }
         }
     }
@@ -2138,63 +2107,30 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class NMFCType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class PickupOptionsType {
         
-        private string primeCodeField;
+        private string liftGateAtPickupIndicatorField;
         
-        private string subCodeField;
+        private string holdForPickupIndicatorField;
         
         /// <remarks/>
-        public string PrimeCode {
+        public string LiftGateAtPickupIndicator {
             get {
-                return this.primeCodeField;
+                return this.liftGateAtPickupIndicatorField;
             }
             set {
-                this.primeCodeField = value;
+                this.liftGateAtPickupIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        public string SubCode {
+        public string HoldForPickupIndicator {
             get {
-                return this.subCodeField;
+                return this.holdForPickupIndicatorField;
             }
             set {
-                this.subCodeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class CommodityType {
-        
-        private string freightClassField;
-        
-        private NMFCType nMFCField;
-        
-        /// <remarks/>
-        public string FreightClass {
-            get {
-                return this.freightClassField;
-            }
-            set {
-                this.freightClassField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public NMFCType NMFC {
-            get {
-                return this.nMFCField;
-            }
-            set {
-                this.nMFCField = value;
+                this.holdForPickupIndicatorField = value;
             }
         }
     }
@@ -2204,15 +2140,372 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipmentServiceOptionsAccessPointCODType {
+        
+        private string currencyCodeField;
+        
+        private string monetaryValueField;
+        
+        /// <remarks/>
+        public string CurrencyCode {
+            get {
+                return this.currencyCodeField;
+            }
+            set {
+                this.currencyCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MonetaryValue {
+            get {
+                return this.monetaryValueField;
+            }
+            set {
+                this.monetaryValueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipmentServiceOptionsType {
+        
+        private string saturdayPickupIndicatorField;
+        
+        private string saturdayDeliveryIndicatorField;
+        
+        private ShipmentServiceOptionsAccessPointCODType accessPointCODField;
+        
+        private string deliverToAddresseeOnlyIndicatorField;
+        
+        private string directDeliveryOnlyIndicatorField;
+        
+        private CODType cODField;
+        
+        private DeliveryConfirmationType deliveryConfirmationField;
+        
+        private string returnOfDocumentIndicatorField;
+        
+        private string uPScarbonneutralIndicatorField;
+        
+        private string certificateOfOriginIndicatorField;
+        
+        private PickupOptionsType pickupOptionsField;
+        
+        private DeliveryOptionsType deliveryOptionsField;
+        
+        private RestrictedArticlesType restrictedArticlesField;
+        
+        private string shipperExportDeclarationIndicatorField;
+        
+        private string commercialInvoiceRemovalIndicatorField;
+        
+        private ImportControlType importControlField;
+        
+        private ReturnServiceType returnServiceField;
+        
+        private string sDLShipmentIndicatorField;
+        
+        private string ePRAIndicatorField;
+        
+        /// <remarks/>
+        public string SaturdayPickupIndicator {
+            get {
+                return this.saturdayPickupIndicatorField;
+            }
+            set {
+                this.saturdayPickupIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SaturdayDeliveryIndicator {
+            get {
+                return this.saturdayDeliveryIndicatorField;
+            }
+            set {
+                this.saturdayDeliveryIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ShipmentServiceOptionsAccessPointCODType AccessPointCOD {
+            get {
+                return this.accessPointCODField;
+            }
+            set {
+                this.accessPointCODField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DeliverToAddresseeOnlyIndicator {
+            get {
+                return this.deliverToAddresseeOnlyIndicatorField;
+            }
+            set {
+                this.deliverToAddresseeOnlyIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DirectDeliveryOnlyIndicator {
+            get {
+                return this.directDeliveryOnlyIndicatorField;
+            }
+            set {
+                this.directDeliveryOnlyIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public CODType COD {
+            get {
+                return this.cODField;
+            }
+            set {
+                this.cODField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public DeliveryConfirmationType DeliveryConfirmation {
+            get {
+                return this.deliveryConfirmationField;
+            }
+            set {
+                this.deliveryConfirmationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ReturnOfDocumentIndicator {
+            get {
+                return this.returnOfDocumentIndicatorField;
+            }
+            set {
+                this.returnOfDocumentIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string UPScarbonneutralIndicator {
+            get {
+                return this.uPScarbonneutralIndicatorField;
+            }
+            set {
+                this.uPScarbonneutralIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CertificateOfOriginIndicator {
+            get {
+                return this.certificateOfOriginIndicatorField;
+            }
+            set {
+                this.certificateOfOriginIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public PickupOptionsType PickupOptions {
+            get {
+                return this.pickupOptionsField;
+            }
+            set {
+                this.pickupOptionsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public DeliveryOptionsType DeliveryOptions {
+            get {
+                return this.deliveryOptionsField;
+            }
+            set {
+                this.deliveryOptionsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public RestrictedArticlesType RestrictedArticles {
+            get {
+                return this.restrictedArticlesField;
+            }
+            set {
+                this.restrictedArticlesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShipperExportDeclarationIndicator {
+            get {
+                return this.shipperExportDeclarationIndicatorField;
+            }
+            set {
+                this.shipperExportDeclarationIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CommercialInvoiceRemovalIndicator {
+            get {
+                return this.commercialInvoiceRemovalIndicatorField;
+            }
+            set {
+                this.commercialInvoiceRemovalIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ImportControlType ImportControl {
+            get {
+                return this.importControlField;
+            }
+            set {
+                this.importControlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ReturnServiceType ReturnService {
+            get {
+                return this.returnServiceField;
+            }
+            set {
+                this.returnServiceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SDLShipmentIndicator {
+            get {
+                return this.sDLShipmentIndicatorField;
+            }
+            set {
+                this.sDLShipmentIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string EPRAIndicator {
+            get {
+                return this.ePRAIndicatorField;
+            }
+            set {
+                this.ePRAIndicatorField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class CODType {
+        
+        private string cODFundsCodeField;
+        
+        private CODAmountType cODAmountField;
+        
+        /// <remarks/>
+        public string CODFundsCode {
+            get {
+                return this.cODFundsCodeField;
+            }
+            set {
+                this.cODFundsCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public CODAmountType CODAmount {
+            get {
+                return this.cODAmountField;
+            }
+            set {
+                this.cODAmountField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class CODAmountType {
+        
+        private string currencyCodeField;
+        
+        private string monetaryValueField;
+        
+        /// <remarks/>
+        public string CurrencyCode {
+            get {
+                return this.currencyCodeField;
+            }
+            set {
+                this.currencyCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MonetaryValue {
+            get {
+                return this.monetaryValueField;
+            }
+            set {
+                this.monetaryValueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class DeliveryConfirmationType {
+        
+        private string dCISTypeField;
+        
+        /// <remarks/>
+        public string DCISType {
+            get {
+                return this.dCISTypeField;
+            }
+            set {
+                this.dCISTypeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class DryIceWeightType {
         
-        private ShipUnitOfMeasurementType unitOfMeasurementField;
+        private CodeDescriptionType unitOfMeasurementField;
         
         private string weightField;
         
         /// <remarks/>
-        public ShipUnitOfMeasurementType UnitOfMeasurement {
+        public CodeDescriptionType UnitOfMeasurement {
             get {
                 return this.unitOfMeasurementField;
             }
@@ -2237,7 +2530,7 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class DryIceType {
         
         private string regulationSetField;
@@ -2245,6 +2538,8 @@ namespace ShippingAPI.WebReference1 {
         private DryIceWeightType dryIceWeightField;
         
         private string medicalUseIndicatorField;
+        
+        private string auditRequiredField;
         
         /// <remarks/>
         public string RegulationSet {
@@ -2275,6 +2570,16 @@ namespace ShippingAPI.WebReference1 {
                 this.medicalUseIndicatorField = value;
             }
         }
+        
+        /// <remarks/>
+        public string AuditRequired {
+            get {
+                return this.auditRequiredField;
+            }
+            set {
+                this.auditRequiredField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -2282,46 +2587,18 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class HazMatType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class HazMatChemicalRecordType {
         
-        private string packagingTypeQuantityField;
-        
-        private string recordIdentifier1Field;
-        
-        private string recordIdentifier2Field;
-        
-        private string recordIdentifier3Field;
-        
-        private string subRiskClassField;
-        
-        private string aDRItemNumberField;
-        
-        private string aDRPackingGroupLetterField;
-        
-        private string technicalNameField;
-        
-        private string hazardLabelRequiredField;
+        private string chemicalRecordIdentifierField;
         
         private string classDivisionNumberField;
         
-        private string referenceNumberField;
-        
-        private string quantityField;
-        
-        private string uOMField;
-        
-        private string packagingTypeField;
-        
         private string iDNumberField;
         
-        private string properShippingNameField;
+        private string transportationModeField;
         
-        private string additionalDescriptionField;
-        
-        private string packagingGroupTypeField;
-        
-        private string packagingInstructionCodeField;
+        private string regulationSetField;
         
         private string emergencyPhoneField;
         
@@ -2329,9 +2606,27 @@ namespace ShippingAPI.WebReference1 {
         
         private string reportableQuantityField;
         
-        private string regulationSetField;
+        private string subRiskClassField;
         
-        private string transportationModeField;
+        private string packagingGroupTypeField;
+        
+        private string quantityField;
+        
+        private string uOMField;
+        
+        private string packagingInstructionCodeField;
+        
+        private string properShippingNameField;
+        
+        private string technicalNameField;
+        
+        private string additionalDescriptionField;
+        
+        private string packagingTypeField;
+        
+        private string hazardLabelRequiredField;
+        
+        private string packagingTypeQuantityField;
         
         private string commodityRegulatedLevelCodeField;
         
@@ -2339,95 +2634,13 @@ namespace ShippingAPI.WebReference1 {
         
         private string tunnelRestrictionCodeField;
         
-        private string chemicalRecordIdentifierField;
-        
         /// <remarks/>
-        public string PackagingTypeQuantity {
+        public string ChemicalRecordIdentifier {
             get {
-                return this.packagingTypeQuantityField;
+                return this.chemicalRecordIdentifierField;
             }
             set {
-                this.packagingTypeQuantityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string RecordIdentifier1 {
-            get {
-                return this.recordIdentifier1Field;
-            }
-            set {
-                this.recordIdentifier1Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string RecordIdentifier2 {
-            get {
-                return this.recordIdentifier2Field;
-            }
-            set {
-                this.recordIdentifier2Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string RecordIdentifier3 {
-            get {
-                return this.recordIdentifier3Field;
-            }
-            set {
-                this.recordIdentifier3Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string SubRiskClass {
-            get {
-                return this.subRiskClassField;
-            }
-            set {
-                this.subRiskClassField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string aDRItemNumber {
-            get {
-                return this.aDRItemNumberField;
-            }
-            set {
-                this.aDRItemNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string aDRPackingGroupLetter {
-            get {
-                return this.aDRPackingGroupLetterField;
-            }
-            set {
-                this.aDRPackingGroupLetterField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string TechnicalName {
-            get {
-                return this.technicalNameField;
-            }
-            set {
-                this.technicalNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string HazardLabelRequired {
-            get {
-                return this.hazardLabelRequiredField;
-            }
-            set {
-                this.hazardLabelRequiredField = value;
+                this.chemicalRecordIdentifierField = value;
             }
         }
         
@@ -2442,46 +2655,6 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public string ReferenceNumber {
-            get {
-                return this.referenceNumberField;
-            }
-            set {
-                this.referenceNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Quantity {
-            get {
-                return this.quantityField;
-            }
-            set {
-                this.quantityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string UOM {
-            get {
-                return this.uOMField;
-            }
-            set {
-                this.uOMField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PackagingType {
-            get {
-                return this.packagingTypeField;
-            }
-            set {
-                this.packagingTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
         public string IDNumber {
             get {
                 return this.iDNumberField;
@@ -2492,42 +2665,22 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public string ProperShippingName {
+        public string TransportationMode {
             get {
-                return this.properShippingNameField;
+                return this.transportationModeField;
             }
             set {
-                this.properShippingNameField = value;
+                this.transportationModeField = value;
             }
         }
         
         /// <remarks/>
-        public string AdditionalDescription {
+        public string RegulationSet {
             get {
-                return this.additionalDescriptionField;
+                return this.regulationSetField;
             }
             set {
-                this.additionalDescriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PackagingGroupType {
-            get {
-                return this.packagingGroupTypeField;
-            }
-            set {
-                this.packagingGroupTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PackagingInstructionCode {
-            get {
-                return this.packagingInstructionCodeField;
-            }
-            set {
-                this.packagingInstructionCodeField = value;
+                this.regulationSetField = value;
             }
         }
         
@@ -2562,22 +2715,112 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public string RegulationSet {
+        public string SubRiskClass {
             get {
-                return this.regulationSetField;
+                return this.subRiskClassField;
             }
             set {
-                this.regulationSetField = value;
+                this.subRiskClassField = value;
             }
         }
         
         /// <remarks/>
-        public string TransportationMode {
+        public string PackagingGroupType {
             get {
-                return this.transportationModeField;
+                return this.packagingGroupTypeField;
             }
             set {
-                this.transportationModeField = value;
+                this.packagingGroupTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Quantity {
+            get {
+                return this.quantityField;
+            }
+            set {
+                this.quantityField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string UOM {
+            get {
+                return this.uOMField;
+            }
+            set {
+                this.uOMField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PackagingInstructionCode {
+            get {
+                return this.packagingInstructionCodeField;
+            }
+            set {
+                this.packagingInstructionCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ProperShippingName {
+            get {
+                return this.properShippingNameField;
+            }
+            set {
+                this.properShippingNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TechnicalName {
+            get {
+                return this.technicalNameField;
+            }
+            set {
+                this.technicalNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AdditionalDescription {
+            get {
+                return this.additionalDescriptionField;
+            }
+            set {
+                this.additionalDescriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PackagingType {
+            get {
+                return this.packagingTypeField;
+            }
+            set {
+                this.packagingTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string HazardLabelRequired {
+            get {
+                return this.hazardLabelRequiredField;
+            }
+            set {
+                this.hazardLabelRequiredField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PackagingTypeQuantity {
+            get {
+                return this.packagingTypeQuantityField;
+            }
+            set {
+                this.packagingTypeQuantityField = value;
             }
         }
         
@@ -2610,14 +2853,74 @@ namespace ShippingAPI.WebReference1 {
                 this.tunnelRestrictionCodeField = value;
             }
         }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class HazMatType {
+        
+        private string packageIdentifierField;
+        
+        private string qValueField;
+        
+        private string overPackedIndicatorField;
+        
+        private string allPackedInOneIndicatorField;
+        
+        private HazMatChemicalRecordType[] hazMatChemicalRecordField;
         
         /// <remarks/>
-        public string ChemicalRecordIdentifier {
+        public string PackageIdentifier {
             get {
-                return this.chemicalRecordIdentifierField;
+                return this.packageIdentifierField;
             }
             set {
-                this.chemicalRecordIdentifierField = value;
+                this.packageIdentifierField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string QValue {
+            get {
+                return this.qValueField;
+            }
+            set {
+                this.qValueField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OverPackedIndicator {
+            get {
+                return this.overPackedIndicatorField;
+            }
+            set {
+                this.overPackedIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AllPackedInOneIndicator {
+            get {
+                return this.allPackedInOneIndicatorField;
+            }
+            set {
+                this.allPackedInOneIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("HazMatChemicalRecord")]
+        public HazMatChemicalRecordType[] HazMatChemicalRecord {
+            get {
+                return this.hazMatChemicalRecordField;
+            }
+            set {
+                this.hazMatChemicalRecordField = value;
             }
         }
     }
@@ -2627,124 +2930,30 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PSONotificationType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class InsuranceValueType {
         
-        private string notificationCodeField;
+        private string currencyCodeField;
         
-        private EmailDetailsType eMailField;
+        private string monetaryValueField;
         
         /// <remarks/>
-        public string NotificationCode {
+        public string CurrencyCode {
             get {
-                return this.notificationCodeField;
+                return this.currencyCodeField;
             }
             set {
-                this.notificationCodeField = value;
+                this.currencyCodeField = value;
             }
         }
         
         /// <remarks/>
-        public EmailDetailsType EMail {
+        public string MonetaryValue {
             get {
-                return this.eMailField;
+                return this.monetaryValueField;
             }
             set {
-                this.eMailField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class EmailDetailsType {
-        
-        private string[] eMailAddressField;
-        
-        private string undeliverableEMailAddressField;
-        
-        private string fromEMailAddressField;
-        
-        private string fromNameField;
-        
-        private string memoField;
-        
-        private string subjectField;
-        
-        private string subjectCodeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EMailAddress")]
-        public string[] EMailAddress {
-            get {
-                return this.eMailAddressField;
-            }
-            set {
-                this.eMailAddressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string UndeliverableEMailAddress {
-            get {
-                return this.undeliverableEMailAddressField;
-            }
-            set {
-                this.undeliverableEMailAddressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FromEMailAddress {
-            get {
-                return this.fromEMailAddressField;
-            }
-            set {
-                this.fromEMailAddressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FromName {
-            get {
-                return this.fromNameField;
-            }
-            set {
-                this.fromNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Memo {
-            get {
-                return this.memoField;
-            }
-            set {
-                this.memoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Subject {
-            get {
-                return this.subjectField;
-            }
-            set {
-                this.subjectField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string SubjectCode {
-            get {
-                return this.subjectCodeField;
-            }
-            set {
-                this.subjectCodeField = value;
+                this.monetaryValueField = value;
             }
         }
     }
@@ -2754,63 +2963,42 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ContactInfoType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class InsuranceType {
         
-        private string nameField;
+        private InsuranceValueType basicFlexibleParcelIndicatorField;
         
-        private ShipPhoneType phoneField;
+        private InsuranceValueType extendedFlexibleParcelIndicatorField;
+        
+        private InsuranceValueType timeInTransitFlexibleParcelIndicatorField;
         
         /// <remarks/>
-        public string Name {
+        public InsuranceValueType BasicFlexibleParcelIndicator {
             get {
-                return this.nameField;
+                return this.basicFlexibleParcelIndicatorField;
             }
             set {
-                this.nameField = value;
+                this.basicFlexibleParcelIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        public ShipPhoneType Phone {
+        public InsuranceValueType ExtendedFlexibleParcelIndicator {
             get {
-                return this.phoneField;
+                return this.extendedFlexibleParcelIndicatorField;
             }
             set {
-                this.phoneField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipPhoneType {
-        
-        private string numberField;
-        
-        private string extensionField;
-        
-        /// <remarks/>
-        public string Number {
-            get {
-                return this.numberField;
-            }
-            set {
-                this.numberField = value;
+                this.extendedFlexibleParcelIndicatorField = value;
             }
         }
         
         /// <remarks/>
-        public string Extension {
+        public InsuranceValueType TimeInTransitFlexibleParcelIndicator {
             get {
-                return this.extensionField;
+                return this.timeInTransitFlexibleParcelIndicatorField;
             }
             set {
-                this.extensionField = value;
+                this.timeInTransitFlexibleParcelIndicatorField = value;
             }
         }
     }
@@ -2820,18 +3008,30 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class VerbalConfirmationType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipperDeclaredValueType {
         
-        private ContactInfoType contactInfoField;
+        private string currencyCodeField;
+        
+        private string monetaryValueField;
         
         /// <remarks/>
-        public ContactInfoType ContactInfo {
+        public string CurrencyCode {
             get {
-                return this.contactInfoField;
+                return this.currencyCodeField;
             }
             set {
-                this.contactInfoField = value;
+                this.currencyCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MonetaryValue {
+            get {
+                return this.monetaryValueField;
+            }
+            set {
+                this.monetaryValueField = value;
             }
         }
     }
@@ -2841,7 +3041,40 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class InsuredValueType {
+        
+        private string currencyCodeField;
+        
+        private string monetaryValueField;
+        
+        /// <remarks/>
+        public string CurrencyCode {
+            get {
+                return this.currencyCodeField;
+            }
+            set {
+                this.currencyCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MonetaryValue {
+            get {
+                return this.monetaryValueField;
+            }
+            set {
+                this.monetaryValueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class PackageServiceOptionsAccessPointCODType {
         
         private string currencyCodeField;
@@ -2874,176 +3107,30 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PSOCODType {
-        
-        private string cODFundsCodeField;
-        
-        private CurrencyMonetaryType cODAmountField;
-        
-        /// <remarks/>
-        public string CODFundsCode {
-            get {
-                return this.cODFundsCodeField;
-            }
-            set {
-                this.cODFundsCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public CurrencyMonetaryType CODAmount {
-            get {
-                return this.cODAmountField;
-            }
-            set {
-                this.cODAmountField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class CurrencyMonetaryType {
-        
-        private string currencyCodeField;
-        
-        private string monetaryValueField;
-        
-        /// <remarks/>
-        public string CurrencyCode {
-            get {
-                return this.currencyCodeField;
-            }
-            set {
-                this.currencyCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MonetaryValue {
-            get {
-                return this.monetaryValueField;
-            }
-            set {
-                this.monetaryValueField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class DeclaredValueType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PackageDeclaredValueType {
-        
-        private DeclaredValueType typeField;
-        
-        private string currencyCodeField;
-        
-        private string monetaryValueField;
-        
-        /// <remarks/>
-        public DeclaredValueType Type {
-            get {
-                return this.typeField;
-            }
-            set {
-                this.typeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CurrencyCode {
-            get {
-                return this.currencyCodeField;
-            }
-            set {
-                this.currencyCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MonetaryValue {
-            get {
-                return this.monetaryValueField;
-            }
-            set {
-                this.monetaryValueField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class PackageServiceOptionsType {
         
         private DeliveryConfirmationType deliveryConfirmationField;
         
-        private PackageDeclaredValueType declaredValueField;
-        
-        private PSOCODType cODField;
-        
         private PackageServiceOptionsAccessPointCODType accessPointCODField;
         
-        private VerbalConfirmationType verbalConfirmationField;
+        private CODType cODField;
         
-        private string shipperReleaseIndicatorField;
+        private InsuredValueType declaredValueField;
         
-        private PSONotificationType notificationField;
-        
-        private HazMatType[] hazMatField;
-        
-        private DryIceType dryIceField;
-        
-        private string uPSPremiumCareIndicatorField;
+        private ShipperDeclaredValueType shipperDeclaredValueField;
         
         private string proactiveIndicatorField;
         
-        private string packageIdentifierField;
+        private InsuranceType insuranceField;
+        
+        private string verbalConfirmationIndicatorField;
+        
+        private string uPSPremiumCareIndicatorField;
+        
+        private HazMatType hazMatField;
+        
+        private DryIceType dryIceField;
         
         /// <remarks/>
         public DeliveryConfirmationType DeliveryConfirmation {
@@ -3052,26 +3139,6 @@ namespace ShippingAPI.WebReference1 {
             }
             set {
                 this.deliveryConfirmationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public PackageDeclaredValueType DeclaredValue {
-            get {
-                return this.declaredValueField;
-            }
-            set {
-                this.declaredValueField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public PSOCODType COD {
-            get {
-                return this.cODField;
-            }
-            set {
-                this.cODField = value;
             }
         }
         
@@ -3086,38 +3153,77 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public VerbalConfirmationType VerbalConfirmation {
+        public CODType COD {
             get {
-                return this.verbalConfirmationField;
+                return this.cODField;
             }
             set {
-                this.verbalConfirmationField = value;
+                this.cODField = value;
             }
         }
         
         /// <remarks/>
-        public string ShipperReleaseIndicator {
+        public InsuredValueType DeclaredValue {
             get {
-                return this.shipperReleaseIndicatorField;
+                return this.declaredValueField;
             }
             set {
-                this.shipperReleaseIndicatorField = value;
+                this.declaredValueField = value;
             }
         }
         
         /// <remarks/>
-        public PSONotificationType Notification {
+        public ShipperDeclaredValueType ShipperDeclaredValue {
             get {
-                return this.notificationField;
+                return this.shipperDeclaredValueField;
             }
             set {
-                this.notificationField = value;
+                this.shipperDeclaredValueField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HazMat")]
-        public HazMatType[] HazMat {
+        public string ProactiveIndicator {
+            get {
+                return this.proactiveIndicatorField;
+            }
+            set {
+                this.proactiveIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public InsuranceType Insurance {
+            get {
+                return this.insuranceField;
+            }
+            set {
+                this.insuranceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string VerbalConfirmationIndicator {
+            get {
+                return this.verbalConfirmationIndicatorField;
+            }
+            set {
+                this.verbalConfirmationIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string UPSPremiumCareIndicator {
+            get {
+                return this.uPSPremiumCareIndicatorField;
+            }
+            set {
+                this.uPSPremiumCareIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public HazMatType HazMat {
             get {
                 return this.hazMatField;
             }
@@ -3135,34 +3241,37 @@ namespace ShippingAPI.WebReference1 {
                 this.dryIceField = value;
             }
         }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class NMFCCommodityType {
+        
+        private string primeCodeField;
+        
+        private string subCodeField;
         
         /// <remarks/>
-        public string UPSPremiumCareIndicator {
+        public string PrimeCode {
             get {
-                return this.uPSPremiumCareIndicatorField;
+                return this.primeCodeField;
             }
             set {
-                this.uPSPremiumCareIndicatorField = value;
+                this.primeCodeField = value;
             }
         }
         
         /// <remarks/>
-        public string ProactiveIndicator {
+        public string SubCode {
             get {
-                return this.proactiveIndicatorField;
+                return this.subCodeField;
             }
             set {
-                this.proactiveIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PackageIdentifier {
-            get {
-                return this.packageIdentifierField;
-            }
-            set {
-                this.packageIdentifierField = value;
+                this.subCodeField = value;
             }
         }
     }
@@ -3172,30 +3281,30 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class DeliveryConfirmationType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class CommodityType {
         
-        private string dCISTypeField;
+        private string freightClassField;
         
-        private string dCISNumberField;
+        private NMFCCommodityType nMFCField;
         
         /// <remarks/>
-        public string DCISType {
+        public string FreightClass {
             get {
-                return this.dCISTypeField;
+                return this.freightClassField;
             }
             set {
-                this.dCISTypeField = value;
+                this.freightClassField = value;
             }
         }
         
         /// <remarks/>
-        public string DCISNumber {
+        public NMFCCommodityType NMFC {
             get {
-                return this.dCISNumberField;
+                return this.nMFCField;
             }
             set {
-                this.dCISNumberField = value;
+                this.nMFCField = value;
             }
         }
     }
@@ -3205,15 +3314,15 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class PackageWeightType {
         
-        private ShipUnitOfMeasurementType unitOfMeasurementField;
+        private CodeDescriptionType unitOfMeasurementField;
         
         private string weightField;
         
         /// <remarks/>
-        public ShipUnitOfMeasurementType UnitOfMeasurement {
+        public CodeDescriptionType UnitOfMeasurement {
             get {
                 return this.unitOfMeasurementField;
             }
@@ -3238,10 +3347,10 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class DimensionsType {
         
-        private ShipUnitOfMeasurementType unitOfMeasurementField;
+        private CodeDescriptionType unitOfMeasurementField;
         
         private string lengthField;
         
@@ -3250,7 +3359,7 @@ namespace ShippingAPI.WebReference1 {
         private string heightField;
         
         /// <remarks/>
-        public ShipUnitOfMeasurementType UnitOfMeasurement {
+        public CodeDescriptionType UnitOfMeasurement {
             get {
                 return this.unitOfMeasurementField;
             }
@@ -3295,45 +3404,10 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PackagingType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class PackageType {
         
-        private string descriptionField;
-        
-        private PackagingType packagingField;
+        private CodeDescriptionType packagingTypeField;
         
         private DimensionsType dimensionsField;
         
@@ -3341,35 +3415,21 @@ namespace ShippingAPI.WebReference1 {
         
         private PackageWeightType packageWeightField;
         
+        private CommodityType commodityField;
+        
         private string largePackageIndicatorField;
-        
-        private ReferenceNumberType[] referenceNumberField;
-        
-        private string additionalHandlingIndicatorField;
         
         private PackageServiceOptionsType packageServiceOptionsField;
         
-        private CommodityType commodityField;
-        
-        private HazMatPackageInformationType hazMatPackageInformationField;
+        private string additionalHandlingIndicatorField;
         
         /// <remarks/>
-        public string Description {
+        public CodeDescriptionType PackagingType {
             get {
-                return this.descriptionField;
+                return this.packagingTypeField;
             }
             set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public PackagingType Packaging {
-            get {
-                return this.packagingField;
-            }
-            set {
-                this.packagingField = value;
+                this.packagingTypeField = value;
             }
         }
         
@@ -3404,33 +3464,22 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
+        public CommodityType Commodity {
+            get {
+                return this.commodityField;
+            }
+            set {
+                this.commodityField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string LargePackageIndicator {
             get {
                 return this.largePackageIndicatorField;
             }
             set {
                 this.largePackageIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ReferenceNumber")]
-        public ReferenceNumberType[] ReferenceNumber {
-            get {
-                return this.referenceNumberField;
-            }
-            set {
-                this.referenceNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string AdditionalHandlingIndicator {
-            get {
-                return this.additionalHandlingIndicatorField;
-            }
-            set {
-                this.additionalHandlingIndicatorField = value;
             }
         }
         
@@ -3445,22 +3494,12 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public CommodityType Commodity {
+        public string AdditionalHandlingIndicator {
             get {
-                return this.commodityField;
+                return this.additionalHandlingIndicatorField;
             }
             set {
-                this.commodityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public HazMatPackageInformationType HazMatPackageInformation {
-            get {
-                return this.hazMatPackageInformationField;
-            }
-            set {
-                this.hazMatPackageInformationField = value;
+                this.additionalHandlingIndicatorField = value;
             }
         }
     }
@@ -3470,1052 +3509,15 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ReferenceNumberType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipmentWeightType {
         
-        private string barCodeIndicatorField;
-        
-        private string codeField;
-        
-        private string valueField;
-        
-        /// <remarks/>
-        public string BarCodeIndicator {
-            get {
-                return this.barCodeIndicatorField;
-            }
-            set {
-                this.barCodeIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Value {
-            get {
-                return this.valueField;
-            }
-            set {
-                this.valueField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PreAlertTextMessageType {
-        
-        private string phoneNumberField;
-        
-        /// <remarks/>
-        public string PhoneNumber {
-            get {
-                return this.phoneNumberField;
-            }
-            set {
-                this.phoneNumberField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PreAlertVoiceMessageType {
-        
-        private string phoneNumberField;
-        
-        /// <remarks/>
-        public string PhoneNumber {
-            get {
-                return this.phoneNumberField;
-            }
-            set {
-                this.phoneNumberField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PreAlertEMailMessageType {
-        
-        private string eMailAddressField;
-        
-        private string undeliverableEMailAddressField;
-        
-        /// <remarks/>
-        public string EMailAddress {
-            get {
-                return this.eMailAddressField;
-            }
-            set {
-                this.eMailAddressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string UndeliverableEMailAddress {
-            get {
-                return this.undeliverableEMailAddressField;
-            }
-            set {
-                this.undeliverableEMailAddressField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PreAlertNotificationType {
-        
-        private PreAlertEMailMessageType eMailMessageField;
-        
-        private PreAlertVoiceMessageType voiceMessageField;
-        
-        private PreAlertTextMessageType textMessageField;
-        
-        private LocaleType localeField;
-        
-        /// <remarks/>
-        public PreAlertEMailMessageType EMailMessage {
-            get {
-                return this.eMailMessageField;
-            }
-            set {
-                this.eMailMessageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public PreAlertVoiceMessageType VoiceMessage {
-            get {
-                return this.voiceMessageField;
-            }
-            set {
-                this.voiceMessageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public PreAlertTextMessageType TextMessage {
-            get {
-                return this.textMessageField;
-            }
-            set {
-                this.textMessageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public LocaleType Locale {
-            get {
-                return this.localeField;
-            }
-            set {
-                this.localeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class LocaleType {
-        
-        private string languageField;
-        
-        private string dialectField;
-        
-        /// <remarks/>
-        public string Language {
-            get {
-                return this.languageField;
-            }
-            set {
-                this.languageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Dialect {
-            get {
-                return this.dialectField;
-            }
-            set {
-                this.dialectField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class LabelMethodType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class LicenseType {
-        
-        private string numberField;
-        
-        private string dateField;
-        
-        private string exceptionCodeField;
-        
-        /// <remarks/>
-        public string Number {
-            get {
-                return this.numberField;
-            }
-            set {
-                this.numberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Date {
-            get {
-                return this.dateField;
-            }
-            set {
-                this.dateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExceptionCode {
-            get {
-                return this.exceptionCodeField;
-            }
-            set {
-                this.exceptionCodeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class BlanketPeriodType {
-        
-        private string beginDateField;
-        
-        private string endDateField;
-        
-        /// <remarks/>
-        public string BeginDate {
-            get {
-                return this.beginDateField;
-            }
-            set {
-                this.beginDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EndDate {
-            get {
-                return this.endDateField;
-            }
-            set {
-                this.endDateField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class OtherChargesType {
-        
-        private string monetaryValueField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string MonetaryValue {
-            get {
-                return this.monetaryValueField;
-            }
-            set {
-                this.monetaryValueField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class IFChargesType {
-        
-        private string monetaryValueField;
-        
-        /// <remarks/>
-        public string MonetaryValue {
-            get {
-                return this.monetaryValueField;
-            }
-            set {
-                this.monetaryValueField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class DDTCInformationType {
-        
-        private string iTARExemptionNumberField;
-        
-        private string uSMLCategoryCodeField;
-        
-        private string eligiblePartyIndicatorField;
-        
-        private string registrationNumberField;
-        
-        private string quantityField;
-        
-        private UnitOfMeasurementType unitOfMeasurementField;
-        
-        private string significantMilitaryEquipmentIndicatorField;
-        
-        private string aCMNumberField;
-        
-        /// <remarks/>
-        public string ITARExemptionNumber {
-            get {
-                return this.iTARExemptionNumberField;
-            }
-            set {
-                this.iTARExemptionNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string USMLCategoryCode {
-            get {
-                return this.uSMLCategoryCodeField;
-            }
-            set {
-                this.uSMLCategoryCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EligiblePartyIndicator {
-            get {
-                return this.eligiblePartyIndicatorField;
-            }
-            set {
-                this.eligiblePartyIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string RegistrationNumber {
-            get {
-                return this.registrationNumberField;
-            }
-            set {
-                this.registrationNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Quantity {
-            get {
-                return this.quantityField;
-            }
-            set {
-                this.quantityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public UnitOfMeasurementType UnitOfMeasurement {
-            get {
-                return this.unitOfMeasurementField;
-            }
-            set {
-                this.unitOfMeasurementField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string SignificantMilitaryEquipmentIndicator {
-            get {
-                return this.significantMilitaryEquipmentIndicatorField;
-            }
-            set {
-                this.significantMilitaryEquipmentIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ACMNumber {
-            get {
-                return this.aCMNumberField;
-            }
-            set {
-                this.aCMNumberField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class UnitOfMeasurementType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class EEILicenseType {
-        
-        private string numberField;
-        
-        private string codeField;
-        
-        private string licenseLineValueField;
-        
-        private string eCCNNumberField;
-        
-        /// <remarks/>
-        public string Number {
-            get {
-                return this.numberField;
-            }
-            set {
-                this.numberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string LicenseLineValue {
-            get {
-                return this.licenseLineValueField;
-            }
-            set {
-                this.licenseLineValueField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ECCNNumber {
-            get {
-                return this.eCCNNumberField;
-            }
-            set {
-                this.eCCNNumberField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class EEIInformationType {
-        
-        private string exportInformationField;
-        
-        private EEILicenseType licenseField;
-        
-        private DDTCInformationType dDTCInformationField;
-        
-        /// <remarks/>
-        public string ExportInformation {
-            get {
-                return this.exportInformationField;
-            }
-            set {
-                this.exportInformationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public EEILicenseType License {
-            get {
-                return this.licenseField;
-            }
-            set {
-                this.licenseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public DDTCInformationType DDTCInformation {
-            get {
-                return this.dDTCInformationField;
-            }
-            set {
-                this.dDTCInformationField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class PackageAssociatedType {
-        
-        private string packageNumberField;
-        
-        private string productAmountField;
-        
-        /// <remarks/>
-        public string PackageNumber {
-            get {
-                return this.packageNumberField;
-            }
-            set {
-                this.packageNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ProductAmount {
-            get {
-                return this.productAmountField;
-            }
-            set {
-                this.productAmountField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class ScheduleBType {
-        
-        private string numberField;
-        
-        private string[] quantityField;
-        
-        private UnitOfMeasurementType[] unitOfMeasurementField;
-        
-        /// <remarks/>
-        public string Number {
-            get {
-                return this.numberField;
-            }
-            set {
-                this.numberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Quantity")]
-        public string[] Quantity {
-            get {
-                return this.quantityField;
-            }
-            set {
-                this.quantityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("UnitOfMeasurement")]
-        public UnitOfMeasurementType[] UnitOfMeasurement {
-            get {
-                return this.unitOfMeasurementField;
-            }
-            set {
-                this.unitOfMeasurementField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class NetCostDateType {
-        
-        private string beginDateField;
-        
-        private string endDateField;
-        
-        /// <remarks/>
-        public string BeginDate {
-            get {
-                return this.beginDateField;
-            }
-            set {
-                this.beginDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EndDate {
-            get {
-                return this.endDateField;
-            }
-            set {
-                this.endDateField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class UnitType {
-        
-        private string numberField;
-        
-        private UnitOfMeasurementType unitOfMeasurementField;
-        
-        private string valueField;
-        
-        /// <remarks/>
-        public string Number {
-            get {
-                return this.numberField;
-            }
-            set {
-                this.numberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public UnitOfMeasurementType UnitOfMeasurement {
-            get {
-                return this.unitOfMeasurementField;
-            }
-            set {
-                this.unitOfMeasurementField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Value {
-            get {
-                return this.valueField;
-            }
-            set {
-                this.valueField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class ProductType {
-        
-        private string[] descriptionField;
-        
-        private UnitType unitField;
-        
-        private string commodityCodeField;
-        
-        private string partNumberField;
-        
-        private string originCountryCodeField;
-        
-        private string jointProductionIndicatorField;
-        
-        private string netCostCodeField;
-        
-        private NetCostDateType netCostDateRangeField;
-        
-        private string preferenceCriteriaField;
-        
-        private string producerInfoField;
-        
-        private string marksAndNumbersField;
-        
-        private string numberOfPackagesPerCommodityField;
-        
-        private ProductWeightType productWeightField;
-        
-        private string vehicleIDField;
-        
-        private ScheduleBType scheduleBField;
-        
-        private string exportTypeField;
-        
-        private string sEDTotalValueField;
-        
-        private string[] excludeFromFormField;
-        
-        private string productCurrencyCodeField;
-        
-        private PackageAssociatedType[] packingListInfoField;
-        
-        private EEIInformationType eEIInformationField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Description")]
-        public string[] Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public UnitType Unit {
-            get {
-                return this.unitField;
-            }
-            set {
-                this.unitField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CommodityCode {
-            get {
-                return this.commodityCodeField;
-            }
-            set {
-                this.commodityCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PartNumber {
-            get {
-                return this.partNumberField;
-            }
-            set {
-                this.partNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string OriginCountryCode {
-            get {
-                return this.originCountryCodeField;
-            }
-            set {
-                this.originCountryCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string JointProductionIndicator {
-            get {
-                return this.jointProductionIndicatorField;
-            }
-            set {
-                this.jointProductionIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string NetCostCode {
-            get {
-                return this.netCostCodeField;
-            }
-            set {
-                this.netCostCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public NetCostDateType NetCostDateRange {
-            get {
-                return this.netCostDateRangeField;
-            }
-            set {
-                this.netCostDateRangeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PreferenceCriteria {
-            get {
-                return this.preferenceCriteriaField;
-            }
-            set {
-                this.preferenceCriteriaField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ProducerInfo {
-            get {
-                return this.producerInfoField;
-            }
-            set {
-                this.producerInfoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MarksAndNumbers {
-            get {
-                return this.marksAndNumbersField;
-            }
-            set {
-                this.marksAndNumbersField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string NumberOfPackagesPerCommodity {
-            get {
-                return this.numberOfPackagesPerCommodityField;
-            }
-            set {
-                this.numberOfPackagesPerCommodityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ProductWeightType ProductWeight {
-            get {
-                return this.productWeightField;
-            }
-            set {
-                this.productWeightField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string VehicleID {
-            get {
-                return this.vehicleIDField;
-            }
-            set {
-                this.vehicleIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ScheduleBType ScheduleB {
-            get {
-                return this.scheduleBField;
-            }
-            set {
-                this.scheduleBField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExportType {
-            get {
-                return this.exportTypeField;
-            }
-            set {
-                this.exportTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string SEDTotalValue {
-            get {
-                return this.sEDTotalValueField;
-            }
-            set {
-                this.sEDTotalValueField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("FormType", IsNullable=false)]
-        public string[] ExcludeFromForm {
-            get {
-                return this.excludeFromFormField;
-            }
-            set {
-                this.excludeFromFormField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ProductCurrencyCode {
-            get {
-                return this.productCurrencyCodeField;
-            }
-            set {
-                this.productCurrencyCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("PackageAssociated", IsNullable=false)]
-        public PackageAssociatedType[] PackingListInfo {
-            get {
-                return this.packingListInfoField;
-            }
-            set {
-                this.packingListInfoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public EEIInformationType EEIInformation {
-            get {
-                return this.eEIInformationField;
-            }
-            set {
-                this.eEIInformationField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class ProductWeightType {
-        
-        private UnitOfMeasurementType unitOfMeasurementField;
+        private CodeDescriptionType unitOfMeasurementField;
         
         private string weightField;
         
         /// <remarks/>
-        public UnitOfMeasurementType UnitOfMeasurement {
+        public CodeDescriptionType UnitOfMeasurement {
             get {
                 return this.unitOfMeasurementField;
             }
@@ -4540,2169 +3542,12 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class SoldToType {
-        
-        private string nameField;
-        
-        private string attentionNameField;
-        
-        private string taxIdentificationNumberField;
-        
-        private PhoneType phoneField;
-        
-        private string optionField;
-        
-        private AddressType addressField;
-        
-        private string eMailAddressField;
-        
-        /// <remarks/>
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string AttentionName {
-            get {
-                return this.attentionNameField;
-            }
-            set {
-                this.attentionNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string TaxIdentificationNumber {
-            get {
-                return this.taxIdentificationNumberField;
-            }
-            set {
-                this.taxIdentificationNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public PhoneType Phone {
-            get {
-                return this.phoneField;
-            }
-            set {
-                this.phoneField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Option {
-            get {
-                return this.optionField;
-            }
-            set {
-                this.optionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public AddressType Address {
-            get {
-                return this.addressField;
-            }
-            set {
-                this.addressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EMailAddress {
-            get {
-                return this.eMailAddressField;
-            }
-            set {
-                this.eMailAddressField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class PhoneType {
-        
-        private string numberField;
-        
-        private string extensionField;
-        
-        /// <remarks/>
-        public string Number {
-            get {
-                return this.numberField;
-            }
-            set {
-                this.numberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Extension {
-            get {
-                return this.extensionField;
-            }
-            set {
-                this.extensionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class AddressType {
-        
-        private string[] addressLineField;
-        
-        private string cityField;
-        
-        private string stateProvinceCodeField;
-        
-        private string townField;
-        
-        private string postalCodeField;
-        
-        private string countryCodeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AddressLine")]
-        public string[] AddressLine {
-            get {
-                return this.addressLineField;
-            }
-            set {
-                this.addressLineField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string City {
-            get {
-                return this.cityField;
-            }
-            set {
-                this.cityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string StateProvinceCode {
-            get {
-                return this.stateProvinceCodeField;
-            }
-            set {
-                this.stateProvinceCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Town {
-            get {
-                return this.townField;
-            }
-            set {
-                this.townField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PostalCode {
-            get {
-                return this.postalCodeField;
-            }
-            set {
-                this.postalCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CountryCode {
-            get {
-                return this.countryCodeField;
-            }
-            set {
-                this.countryCodeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class ProducerType {
-        
-        private string optionField;
-        
-        private string companyNameField;
-        
-        private string taxIdentificationNumberField;
-        
-        private AddressType addressField;
-        
-        private string attentionNameField;
-        
-        private PhoneType phoneField;
-        
-        private string eMailAddressField;
-        
-        /// <remarks/>
-        public string Option {
-            get {
-                return this.optionField;
-            }
-            set {
-                this.optionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CompanyName {
-            get {
-                return this.companyNameField;
-            }
-            set {
-                this.companyNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string TaxIdentificationNumber {
-            get {
-                return this.taxIdentificationNumberField;
-            }
-            set {
-                this.taxIdentificationNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public AddressType Address {
-            get {
-                return this.addressField;
-            }
-            set {
-                this.addressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string AttentionName {
-            get {
-                return this.attentionNameField;
-            }
-            set {
-                this.attentionNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public PhoneType Phone {
-            get {
-                return this.phoneField;
-            }
-            set {
-                this.phoneField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EMailAddress {
-            get {
-                return this.eMailAddressField;
-            }
-            set {
-                this.eMailAddressField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class IntermediateConsigneeType {
-        
-        private string companyNameField;
-        
-        private AddressType addressField;
-        
-        /// <remarks/>
-        public string CompanyName {
-            get {
-                return this.companyNameField;
-            }
-            set {
-                this.companyNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public AddressType Address {
-            get {
-                return this.addressField;
-            }
-            set {
-                this.addressField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class UltimateConsigneeTypeType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class UltimateConsigneeType {
-        
-        private string companyNameField;
-        
-        private AddressType addressField;
-        
-        private UltimateConsigneeTypeType ultimateConsigneeType1Field;
-        
-        /// <remarks/>
-        public string CompanyName {
-            get {
-                return this.companyNameField;
-            }
-            set {
-                this.companyNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public AddressType Address {
-            get {
-                return this.addressField;
-            }
-            set {
-                this.addressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("UltimateConsigneeType")]
-        public UltimateConsigneeTypeType UltimateConsigneeType1 {
-            get {
-                return this.ultimateConsigneeType1Field;
-            }
-            set {
-                this.ultimateConsigneeType1Field = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class ForwardAgentType {
-        
-        private string companyNameField;
-        
-        private string taxIdentificationNumberField;
-        
-        private AddressType addressField;
-        
-        /// <remarks/>
-        public string CompanyName {
-            get {
-                return this.companyNameField;
-            }
-            set {
-                this.companyNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string TaxIdentificationNumber {
-            get {
-                return this.taxIdentificationNumberField;
-            }
-            set {
-                this.taxIdentificationNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public AddressType Address {
-            get {
-                return this.addressField;
-            }
-            set {
-                this.addressField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class ContactType {
-        
-        private ForwardAgentType forwardAgentField;
-        
-        private UltimateConsigneeType ultimateConsigneeField;
-        
-        private IntermediateConsigneeType intermediateConsigneeField;
-        
-        private ProducerType producerField;
-        
-        private SoldToType soldToField;
-        
-        /// <remarks/>
-        public ForwardAgentType ForwardAgent {
-            get {
-                return this.forwardAgentField;
-            }
-            set {
-                this.forwardAgentField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public UltimateConsigneeType UltimateConsignee {
-            get {
-                return this.ultimateConsigneeField;
-            }
-            set {
-                this.ultimateConsigneeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public IntermediateConsigneeType IntermediateConsignee {
-            get {
-                return this.intermediateConsigneeField;
-            }
-            set {
-                this.intermediateConsigneeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ProducerType Producer {
-            get {
-                return this.producerField;
-            }
-            set {
-                this.producerField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public SoldToType SoldTo {
-            get {
-                return this.soldToField;
-            }
-            set {
-                this.soldToField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class ShipperFiledType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        private string preDepartureITNNumberField;
-        
-        private string exemptionLegendField;
-        
-        private string eEIShipmentReferenceNumberField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PreDepartureITNNumber {
-            get {
-                return this.preDepartureITNNumberField;
-            }
-            set {
-                this.preDepartureITNNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExemptionLegend {
-            get {
-                return this.exemptionLegendField;
-            }
-            set {
-                this.exemptionLegendField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EEIShipmentReferenceNumber {
-            get {
-                return this.eEIShipmentReferenceNumberField;
-            }
-            set {
-                this.eEIShipmentReferenceNumberField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class POAType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class UPSFiledType {
-        
-        private POAType pOAField;
-        
-        /// <remarks/>
-        public POAType POA {
-            get {
-                return this.pOAField;
-            }
-            set {
-                this.pOAField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class EEIFilingOptionType {
-        
-        private string codeField;
-        
-        private string eMailAddressField;
-        
-        private string descriptionField;
-        
-        private UPSFiledType uPSFiledField;
-        
-        private ShipperFiledType shipperFiledField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EMailAddress {
-            get {
-                return this.eMailAddressField;
-            }
-            set {
-                this.eMailAddressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public UPSFiledType UPSFiled {
-            get {
-                return this.uPSFiledField;
-            }
-            set {
-                this.uPSFiledField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipperFiledType ShipperFiled {
-            get {
-                return this.shipperFiledField;
-            }
-            set {
-                this.shipperFiledField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class UPSPremiumCareFormType {
-        
-        private string shipmentDateField;
-        
-        private string pageSizeField;
-        
-        private string printTypeField;
-        
-        private string numOfCopiesField;
-        
-        private string[] languageForUPSPremiumCareField;
-        
-        /// <remarks/>
-        public string ShipmentDate {
-            get {
-                return this.shipmentDateField;
-            }
-            set {
-                this.shipmentDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PageSize {
-            get {
-                return this.pageSizeField;
-            }
-            set {
-                this.pageSizeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PrintType {
-            get {
-                return this.printTypeField;
-            }
-            set {
-                this.printTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string NumOfCopies {
-            get {
-                return this.numOfCopiesField;
-            }
-            set {
-                this.numOfCopiesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("Language", IsNullable=false)]
-        public string[] LanguageForUPSPremiumCare {
-            get {
-                return this.languageForUPSPremiumCareField;
-            }
-            set {
-                this.languageForUPSPremiumCareField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class CN22ContentType {
-        
-        private string cN22ContentQuantityField;
-        
-        private string cN22ContentDescriptionField;
-        
-        private ProductWeightType cN22ContentWeightField;
-        
-        private string cN22ContentTotalValueField;
-        
-        private string cN22ContentCurrencyCodeField;
-        
-        private string cN22ContentCountryOfOriginField;
-        
-        private string cN22ContentTariffNumberField;
-        
-        /// <remarks/>
-        public string CN22ContentQuantity {
-            get {
-                return this.cN22ContentQuantityField;
-            }
-            set {
-                this.cN22ContentQuantityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CN22ContentDescription {
-            get {
-                return this.cN22ContentDescriptionField;
-            }
-            set {
-                this.cN22ContentDescriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ProductWeightType CN22ContentWeight {
-            get {
-                return this.cN22ContentWeightField;
-            }
-            set {
-                this.cN22ContentWeightField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CN22ContentTotalValue {
-            get {
-                return this.cN22ContentTotalValueField;
-            }
-            set {
-                this.cN22ContentTotalValueField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CN22ContentCurrencyCode {
-            get {
-                return this.cN22ContentCurrencyCodeField;
-            }
-            set {
-                this.cN22ContentCurrencyCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CN22ContentCountryOfOrigin {
-            get {
-                return this.cN22ContentCountryOfOriginField;
-            }
-            set {
-                this.cN22ContentCountryOfOriginField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CN22ContentTariffNumber {
-            get {
-                return this.cN22ContentTariffNumberField;
-            }
-            set {
-                this.cN22ContentTariffNumberField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class CN22FormType {
-        
-        private string labelSizeField;
-        
-        private string printsPerPageField;
-        
-        private string labelPrintTypeField;
-        
-        private string cN22TypeField;
-        
-        private string cN22OtherDescriptionField;
-        
-        private string foldHereTextField;
-        
-        private CN22ContentType[] cN22ContentField;
-        
-        /// <remarks/>
-        public string LabelSize {
-            get {
-                return this.labelSizeField;
-            }
-            set {
-                this.labelSizeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PrintsPerPage {
-            get {
-                return this.printsPerPageField;
-            }
-            set {
-                this.printsPerPageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string LabelPrintType {
-            get {
-                return this.labelPrintTypeField;
-            }
-            set {
-                this.labelPrintTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CN22Type {
-            get {
-                return this.cN22TypeField;
-            }
-            set {
-                this.cN22TypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CN22OtherDescription {
-            get {
-                return this.cN22OtherDescriptionField;
-            }
-            set {
-                this.cN22OtherDescriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FoldHereText {
-            get {
-                return this.foldHereTextField;
-            }
-            set {
-                this.foldHereTextField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("CN22Content")]
-        public CN22ContentType[] CN22Content {
-            get {
-                return this.cN22ContentField;
-            }
-            set {
-                this.cN22ContentField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/IF/v1.0")]
-    public partial class InternationalFormType {
-        
-        private string[] formTypeField;
-        
-        private string[] userCreatedFormField;
-        
-        private CN22FormType cN22FormField;
-        
-        private UPSPremiumCareFormType uPSPremiumCareFormField;
-        
-        private string additionalDocumentIndicatorField;
-        
-        private string formGroupIdNameField;
-        
-        private string sEDFilingOptionField;
-        
-        private EEIFilingOptionType eEIFilingOptionField;
-        
-        private ContactType contactsField;
-        
-        private ProductType[] productField;
-        
-        private string invoiceNumberField;
-        
-        private string invoiceDateField;
-        
-        private string purchaseOrderNumberField;
-        
-        private string termsOfShipmentField;
-        
-        private string reasonForExportField;
-        
-        private string commentsField;
-        
-        private string declarationStatementField;
-        
-        private IFChargesType discountField;
-        
-        private IFChargesType freightChargesField;
-        
-        private IFChargesType insuranceChargesField;
-        
-        private OtherChargesType otherChargesField;
-        
-        private string currencyCodeField;
-        
-        private BlanketPeriodType blanketPeriodField;
-        
-        private string exportDateField;
-        
-        private string exportingCarrierField;
-        
-        private string carrierIDField;
-        
-        private string inBondCodeField;
-        
-        private string entryNumberField;
-        
-        private string pointOfOriginField;
-        
-        private string pointOfOriginTypeField;
-        
-        private string modeOfTransportField;
-        
-        private string portOfExportField;
-        
-        private string portOfUnloadingField;
-        
-        private string loadingPierField;
-        
-        private string partiesToTransactionField;
-        
-        private string routedExportTransactionIndicatorField;
-        
-        private string containerizedIndicatorField;
-        
-        private LicenseType licenseField;
-        
-        private string eCCNNumberField;
-        
-        private string overridePaperlessIndicatorField;
-        
-        private string shipperMemoField;
-        
-        private string multiCurrencyInvoiceLineTotalField;
-        
-        private string hazardousMaterialsIndicatorField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("FormType")]
-        public string[] FormType {
-            get {
-                return this.formTypeField;
-            }
-            set {
-                this.formTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("DocumentID", IsNullable=false)]
-        public string[] UserCreatedForm {
-            get {
-                return this.userCreatedFormField;
-            }
-            set {
-                this.userCreatedFormField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public CN22FormType CN22Form {
-            get {
-                return this.cN22FormField;
-            }
-            set {
-                this.cN22FormField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public UPSPremiumCareFormType UPSPremiumCareForm {
-            get {
-                return this.uPSPremiumCareFormField;
-            }
-            set {
-                this.uPSPremiumCareFormField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string AdditionalDocumentIndicator {
-            get {
-                return this.additionalDocumentIndicatorField;
-            }
-            set {
-                this.additionalDocumentIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FormGroupIdName {
-            get {
-                return this.formGroupIdNameField;
-            }
-            set {
-                this.formGroupIdNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string SEDFilingOption {
-            get {
-                return this.sEDFilingOptionField;
-            }
-            set {
-                this.sEDFilingOptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public EEIFilingOptionType EEIFilingOption {
-            get {
-                return this.eEIFilingOptionField;
-            }
-            set {
-                this.eEIFilingOptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ContactType Contacts {
-            get {
-                return this.contactsField;
-            }
-            set {
-                this.contactsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Product")]
-        public ProductType[] Product {
-            get {
-                return this.productField;
-            }
-            set {
-                this.productField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string InvoiceNumber {
-            get {
-                return this.invoiceNumberField;
-            }
-            set {
-                this.invoiceNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string InvoiceDate {
-            get {
-                return this.invoiceDateField;
-            }
-            set {
-                this.invoiceDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PurchaseOrderNumber {
-            get {
-                return this.purchaseOrderNumberField;
-            }
-            set {
-                this.purchaseOrderNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string TermsOfShipment {
-            get {
-                return this.termsOfShipmentField;
-            }
-            set {
-                this.termsOfShipmentField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ReasonForExport {
-            get {
-                return this.reasonForExportField;
-            }
-            set {
-                this.reasonForExportField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Comments {
-            get {
-                return this.commentsField;
-            }
-            set {
-                this.commentsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string DeclarationStatement {
-            get {
-                return this.declarationStatementField;
-            }
-            set {
-                this.declarationStatementField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public IFChargesType Discount {
-            get {
-                return this.discountField;
-            }
-            set {
-                this.discountField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public IFChargesType FreightCharges {
-            get {
-                return this.freightChargesField;
-            }
-            set {
-                this.freightChargesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public IFChargesType InsuranceCharges {
-            get {
-                return this.insuranceChargesField;
-            }
-            set {
-                this.insuranceChargesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public OtherChargesType OtherCharges {
-            get {
-                return this.otherChargesField;
-            }
-            set {
-                this.otherChargesField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CurrencyCode {
-            get {
-                return this.currencyCodeField;
-            }
-            set {
-                this.currencyCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public BlanketPeriodType BlanketPeriod {
-            get {
-                return this.blanketPeriodField;
-            }
-            set {
-                this.blanketPeriodField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExportDate {
-            get {
-                return this.exportDateField;
-            }
-            set {
-                this.exportDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExportingCarrier {
-            get {
-                return this.exportingCarrierField;
-            }
-            set {
-                this.exportingCarrierField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CarrierID {
-            get {
-                return this.carrierIDField;
-            }
-            set {
-                this.carrierIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string InBondCode {
-            get {
-                return this.inBondCodeField;
-            }
-            set {
-                this.inBondCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EntryNumber {
-            get {
-                return this.entryNumberField;
-            }
-            set {
-                this.entryNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PointOfOrigin {
-            get {
-                return this.pointOfOriginField;
-            }
-            set {
-                this.pointOfOriginField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PointOfOriginType {
-            get {
-                return this.pointOfOriginTypeField;
-            }
-            set {
-                this.pointOfOriginTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ModeOfTransport {
-            get {
-                return this.modeOfTransportField;
-            }
-            set {
-                this.modeOfTransportField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PortOfExport {
-            get {
-                return this.portOfExportField;
-            }
-            set {
-                this.portOfExportField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PortOfUnloading {
-            get {
-                return this.portOfUnloadingField;
-            }
-            set {
-                this.portOfUnloadingField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string LoadingPier {
-            get {
-                return this.loadingPierField;
-            }
-            set {
-                this.loadingPierField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PartiesToTransaction {
-            get {
-                return this.partiesToTransactionField;
-            }
-            set {
-                this.partiesToTransactionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string RoutedExportTransactionIndicator {
-            get {
-                return this.routedExportTransactionIndicatorField;
-            }
-            set {
-                this.routedExportTransactionIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ContainerizedIndicator {
-            get {
-                return this.containerizedIndicatorField;
-            }
-            set {
-                this.containerizedIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public LicenseType License {
-            get {
-                return this.licenseField;
-            }
-            set {
-                this.licenseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ECCNNumber {
-            get {
-                return this.eCCNNumberField;
-            }
-            set {
-                this.eCCNNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string OverridePaperlessIndicator {
-            get {
-                return this.overridePaperlessIndicatorField;
-            }
-            set {
-                this.overridePaperlessIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ShipperMemo {
-            get {
-                return this.shipperMemoField;
-            }
-            set {
-                this.shipperMemoField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MultiCurrencyInvoiceLineTotal {
-            get {
-                return this.multiCurrencyInvoiceLineTotalField;
-            }
-            set {
-                this.multiCurrencyInvoiceLineTotalField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string HazardousMaterialsIndicator {
-            get {
-                return this.hazardousMaterialsIndicatorField;
-            }
-            set {
-                this.hazardousMaterialsIndicatorField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class LabelDeliveryType {
-        
-        private EmailDetailsType eMailField;
-        
-        private string labelLinksIndicatorField;
-        
-        /// <remarks/>
-        public EmailDetailsType EMail {
-            get {
-                return this.eMailField;
-            }
-            set {
-                this.eMailField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string LabelLinksIndicator {
-            get {
-                return this.labelLinksIndicatorField;
-            }
-            set {
-                this.labelLinksIndicatorField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipmentServiceOptionsNotificationTextMessageType {
-        
-        private string phoneNumberField;
-        
-        /// <remarks/>
-        public string PhoneNumber {
-            get {
-                return this.phoneNumberField;
-            }
-            set {
-                this.phoneNumberField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipmentServiceOptionsNotificationVoiceMessageType {
-        
-        private string phoneNumberField;
-        
-        /// <remarks/>
-        public string PhoneNumber {
-            get {
-                return this.phoneNumberField;
-            }
-            set {
-                this.phoneNumberField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class NotificationType {
-        
-        private string notificationCodeField;
-        
-        private EmailDetailsType eMailField;
-        
-        private ShipmentServiceOptionsNotificationVoiceMessageType voiceMessageField;
-        
-        private ShipmentServiceOptionsNotificationTextMessageType textMessageField;
-        
-        private LocaleType localeField;
-        
-        /// <remarks/>
-        public string NotificationCode {
-            get {
-                return this.notificationCodeField;
-            }
-            set {
-                this.notificationCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public EmailDetailsType EMail {
-            get {
-                return this.eMailField;
-            }
-            set {
-                this.eMailField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipmentServiceOptionsNotificationVoiceMessageType VoiceMessage {
-            get {
-                return this.voiceMessageField;
-            }
-            set {
-                this.voiceMessageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipmentServiceOptionsNotificationTextMessageType TextMessage {
-            get {
-                return this.textMessageField;
-            }
-            set {
-                this.textMessageField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public LocaleType Locale {
-            get {
-                return this.localeField;
-            }
-            set {
-                this.localeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipmentServiceOptionsAccessPointCODType {
-        
-        private string currencyCodeField;
-        
-        private string monetaryValueField;
-        
-        /// <remarks/>
-        public string CurrencyCode {
-            get {
-                return this.currencyCodeField;
-            }
-            set {
-                this.currencyCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MonetaryValue {
-            get {
-                return this.monetaryValueField;
-            }
-            set {
-                this.monetaryValueField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class CODType {
-        
-        private string cODFundsCodeField;
-        
-        private CurrencyMonetaryType cODAmountField;
-        
-        /// <remarks/>
-        public string CODFundsCode {
-            get {
-                return this.cODFundsCodeField;
-            }
-            set {
-                this.cODFundsCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public CurrencyMonetaryType CODAmount {
-            get {
-                return this.cODAmountField;
-            }
-            set {
-                this.cODAmountField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipmentServiceOptionsType {
-        
-        private string saturdayDeliveryIndicatorField;
-        
-        private CODType cODField;
-        
-        private ShipmentServiceOptionsAccessPointCODType accessPointCODField;
-        
-        private string deliverToAddresseeOnlyIndicatorField;
-        
-        private string directDeliveryOnlyIndicatorField;
-        
-        private NotificationType[] notificationField;
-        
-        private LabelDeliveryType labelDeliveryField;
-        
-        private InternationalFormType internationalFormsField;
-        
-        private DeliveryConfirmationType deliveryConfirmationField;
-        
-        private string returnOfDocumentIndicatorField;
-        
-        private string importControlIndicatorField;
-        
-        private LabelMethodType labelMethodField;
-        
-        private string commercialInvoiceRemovalIndicatorField;
-        
-        private string uPScarbonneutralIndicatorField;
-        
-        private PreAlertNotificationType[] preAlertNotificationField;
-        
-        private string exchangeForwardIndicatorField;
-        
-        private string holdForPickupIndicatorField;
-        
-        private string dropoffAtUPSFacilityIndicatorField;
-        
-        private string liftGateForPickUpIndicatorField;
-        
-        private string liftGateForDeliveryIndicatorField;
-        
-        private string sDLShipmentIndicatorField;
-        
-        private string ePRAReleaseCodeField;
-        
-        /// <remarks/>
-        public string SaturdayDeliveryIndicator {
-            get {
-                return this.saturdayDeliveryIndicatorField;
-            }
-            set {
-                this.saturdayDeliveryIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public CODType COD {
-            get {
-                return this.cODField;
-            }
-            set {
-                this.cODField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipmentServiceOptionsAccessPointCODType AccessPointCOD {
-            get {
-                return this.accessPointCODField;
-            }
-            set {
-                this.accessPointCODField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string DeliverToAddresseeOnlyIndicator {
-            get {
-                return this.deliverToAddresseeOnlyIndicatorField;
-            }
-            set {
-                this.deliverToAddresseeOnlyIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string DirectDeliveryOnlyIndicator {
-            get {
-                return this.directDeliveryOnlyIndicatorField;
-            }
-            set {
-                this.directDeliveryOnlyIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Notification")]
-        public NotificationType[] Notification {
-            get {
-                return this.notificationField;
-            }
-            set {
-                this.notificationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public LabelDeliveryType LabelDelivery {
-            get {
-                return this.labelDeliveryField;
-            }
-            set {
-                this.labelDeliveryField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public InternationalFormType InternationalForms {
-            get {
-                return this.internationalFormsField;
-            }
-            set {
-                this.internationalFormsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public DeliveryConfirmationType DeliveryConfirmation {
-            get {
-                return this.deliveryConfirmationField;
-            }
-            set {
-                this.deliveryConfirmationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ReturnOfDocumentIndicator {
-            get {
-                return this.returnOfDocumentIndicatorField;
-            }
-            set {
-                this.returnOfDocumentIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ImportControlIndicator {
-            get {
-                return this.importControlIndicatorField;
-            }
-            set {
-                this.importControlIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public LabelMethodType LabelMethod {
-            get {
-                return this.labelMethodField;
-            }
-            set {
-                this.labelMethodField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CommercialInvoiceRemovalIndicator {
-            get {
-                return this.commercialInvoiceRemovalIndicatorField;
-            }
-            set {
-                this.commercialInvoiceRemovalIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string UPScarbonneutralIndicator {
-            get {
-                return this.uPScarbonneutralIndicatorField;
-            }
-            set {
-                this.uPScarbonneutralIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PreAlertNotification")]
-        public PreAlertNotificationType[] PreAlertNotification {
-            get {
-                return this.preAlertNotificationField;
-            }
-            set {
-                this.preAlertNotificationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExchangeForwardIndicator {
-            get {
-                return this.exchangeForwardIndicatorField;
-            }
-            set {
-                this.exchangeForwardIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string HoldForPickupIndicator {
-            get {
-                return this.holdForPickupIndicatorField;
-            }
-            set {
-                this.holdForPickupIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string DropoffAtUPSFacilityIndicator {
-            get {
-                return this.dropoffAtUPSFacilityIndicatorField;
-            }
-            set {
-                this.dropoffAtUPSFacilityIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string LiftGateForPickUpIndicator {
-            get {
-                return this.liftGateForPickUpIndicatorField;
-            }
-            set {
-                this.liftGateForPickUpIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string LiftGateForDeliveryIndicator {
-            get {
-                return this.liftGateForDeliveryIndicatorField;
-            }
-            set {
-                this.liftGateForDeliveryIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string SDLShipmentIndicator {
-            get {
-                return this.sDLShipmentIndicatorField;
-            }
-            set {
-                this.sDLShipmentIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EPRAReleaseCode {
-            get {
-                return this.ePRAReleaseCodeField;
-            }
-            set {
-                this.ePRAReleaseCodeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PromotionalDiscountInformationType {
-        
-        private string promoCodeField;
-        
-        private string promoAliasCodeField;
-        
-        /// <remarks/>
-        public string PromoCode {
-            get {
-                return this.promoCodeField;
-            }
-            set {
-                this.promoCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PromoAliasCode {
-            get {
-                return this.promoAliasCodeField;
-            }
-            set {
-                this.promoAliasCodeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class IndicationType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ServiceType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class RateInfoType {
-        
-        private string negotiatedRatesIndicatorField;
-        
-        private string fRSShipmentIndicatorField;
-        
-        private string rateChartIndicatorField;
-        
-        private string tPFCNegotiatedRatesIndicatorField;
-        
-        private string userLevelDiscountIndicatorField;
-        
-        /// <remarks/>
-        public string NegotiatedRatesIndicator {
-            get {
-                return this.negotiatedRatesIndicatorField;
-            }
-            set {
-                this.negotiatedRatesIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string FRSShipmentIndicator {
-            get {
-                return this.fRSShipmentIndicatorField;
-            }
-            set {
-                this.fRSShipmentIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string RateChartIndicator {
-            get {
-                return this.rateChartIndicatorField;
-            }
-            set {
-                this.rateChartIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string TPFCNegotiatedRatesIndicator {
-            get {
-                return this.tPFCNegotiatedRatesIndicatorField;
-            }
-            set {
-                this.tPFCNegotiatedRatesIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string UserLevelDiscountIndicator {
-            get {
-                return this.userLevelDiscountIndicatorField;
-            }
-            set {
-                this.userLevelDiscountIndicatorField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class HandlingUnitsType {
         
         private string quantityField;
         
-        private ShipUnitOfMeasurementType typeField;
+        private CodeDescriptionType typeField;
         
         private HandlingUnitsDimensionsType dimensionsField;
         
@@ -6717,7 +3562,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public ShipUnitOfMeasurementType Type {
+        public CodeDescriptionType Type {
             get {
                 return this.typeField;
             }
@@ -6742,7 +3587,7 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class FreightDensityInfoType {
         
         private string adjustedHeightIndicatorField;
@@ -6788,7 +3633,7 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class FreightShipmentInformationType {
         
         private FreightDensityInfoType freightDensityInfoField;
@@ -6821,86 +3666,8 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PaymentType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class FRSPaymentInfoType {
-        
-        private PaymentType typeField;
-        
-        private string accountNumberField;
-        
-        private AccountAddressType addressField;
-        
-        /// <remarks/>
-        public PaymentType Type {
-            get {
-                return this.typeField;
-            }
-            set {
-                this.typeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string AccountNumber {
-            get {
-                return this.accountNumberField;
-            }
-            set {
-                this.accountNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public AccountAddressType Address {
-            get {
-                return this.addressField;
-            }
-            set {
-                this.addressField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class AccountAddressType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class PayerAddressType {
         
         private string postalCodeField;
         
@@ -6932,12 +3699,57 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class FRSPaymentInfoType {
+        
+        private CodeDescriptionType typeField;
+        
+        private string accountNumberField;
+        
+        private PayerAddressType addressField;
+        
+        /// <remarks/>
+        public CodeDescriptionType Type {
+            get {
+                return this.typeField;
+            }
+            set {
+                this.typeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AccountNumber {
+            get {
+                return this.accountNumberField;
+            }
+            set {
+                this.accountNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public PayerAddressType Address {
+            get {
+                return this.addressField;
+            }
+            set {
+                this.addressField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class BillThirdPartyChargeType {
         
         private string accountNumberField;
         
-        private AccountAddressType addressField;
+        private AddressType addressField;
         
         /// <remarks/>
         public string AccountNumber {
@@ -6950,7 +3762,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public AccountAddressType Address {
+        public AddressType Address {
             get {
                 return this.addressField;
             }
@@ -6961,66 +3773,14 @@ namespace ShippingAPI.WebReference1 {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ShipAddressType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ShipToAddressType))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class BillReceiverAddressType {
-        
-        private string postalCodeField;
-        
-        /// <remarks/>
-        public string PostalCode {
-            get {
-                return this.postalCodeField;
-            }
-            set {
-                this.postalCodeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class BillReceiverType {
-        
-        private string accountNumberField;
-        
-        private BillReceiverAddressType addressField;
-        
-        /// <remarks/>
-        public string AccountNumber {
-            get {
-                return this.accountNumberField;
-            }
-            set {
-                this.accountNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public BillReceiverAddressType Address {
-            get {
-                return this.addressField;
-            }
-            set {
-                this.addressField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class CreditCardAddressType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class AddressType {
         
         private string[] addressLineField;
         
@@ -7089,61 +3849,76 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class CreditCardType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipAddressType : AddressType {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipToAddressType : AddressType {
         
-        private string typeField;
-        
-        private string numberField;
-        
-        private string expirationDateField;
-        
-        private string securityCodeField;
-        
-        private CreditCardAddressType addressField;
+        private string residentialAddressIndicatorField;
         
         /// <remarks/>
-        public string Type {
+        public string ResidentialAddressIndicator {
             get {
-                return this.typeField;
+                return this.residentialAddressIndicatorField;
             }
             set {
-                this.typeField = value;
+                this.residentialAddressIndicatorField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class BillReceiverAddressType {
+        
+        private string postalCodeField;
+        
+        /// <remarks/>
+        public string PostalCode {
+            get {
+                return this.postalCodeField;
+            }
+            set {
+                this.postalCodeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class BillReceiverChargeType {
+        
+        private string accountNumberField;
+        
+        private BillReceiverAddressType addressField;
+        
+        /// <remarks/>
+        public string AccountNumber {
+            get {
+                return this.accountNumberField;
+            }
+            set {
+                this.accountNumberField = value;
             }
         }
         
         /// <remarks/>
-        public string Number {
-            get {
-                return this.numberField;
-            }
-            set {
-                this.numberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ExpirationDate {
-            get {
-                return this.expirationDateField;
-            }
-            set {
-                this.expirationDateField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string SecurityCode {
-            get {
-                return this.securityCodeField;
-            }
-            set {
-                this.securityCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public CreditCardAddressType Address {
+        public BillReceiverAddressType Address {
             get {
                 return this.addressField;
             }
@@ -7158,14 +3933,10 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class BillShipperType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class BillShipperChargeType {
         
         private string accountNumberField;
-        
-        private CreditCardType creditCardField;
-        
-        private string alternatePaymentMethodField;
         
         /// <remarks/>
         public string AccountNumber {
@@ -7176,26 +3947,6 @@ namespace ShippingAPI.WebReference1 {
                 this.accountNumberField = value;
             }
         }
-        
-        /// <remarks/>
-        public CreditCardType CreditCard {
-            get {
-                return this.creditCardField;
-            }
-            set {
-                this.creditCardField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string AlternatePaymentMethod {
-            get {
-                return this.alternatePaymentMethodField;
-            }
-            set {
-                this.alternatePaymentMethodField = value;
-            }
-        }
     }
     
     /// <remarks/>
@@ -7203,14 +3954,14 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class ShipmentChargeType {
         
         private string typeField;
         
-        private BillShipperType billShipperField;
+        private BillShipperChargeType billShipperField;
         
-        private BillReceiverType billReceiverField;
+        private BillReceiverChargeType billReceiverField;
         
         private BillThirdPartyChargeType billThirdPartyField;
         
@@ -7227,7 +3978,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public BillShipperType BillShipper {
+        public BillShipperChargeType BillShipper {
             get {
                 return this.billShipperField;
             }
@@ -7237,7 +3988,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public BillReceiverType BillReceiver {
+        public BillReceiverChargeType BillReceiver {
             get {
                 return this.billReceiverField;
             }
@@ -7272,8 +4023,8 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class PaymentInfoType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class PaymentDetailsType {
         
         private ShipmentChargeType[] shipmentChargeField;
         
@@ -7306,8 +4057,41 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ADLAddressType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class IndicationType {
+        
+        private string codeField;
+        
+        private string descriptionField;
+        
+        /// <remarks/>
+        public string Code {
+            get {
+                return this.codeField;
+            }
+            set {
+                this.codeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ADRType {
         
         private string[] addressLineField;
         
@@ -7400,16 +4184,12 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class AlternateDeliveryAddressType {
         
         private string nameField;
         
-        private string attentionNameField;
-        
-        private string uPSAccessPointIDField;
-        
-        private ADLAddressType addressField;
+        private ADRType addressField;
         
         /// <remarks/>
         public string Name {
@@ -7422,27 +4202,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public string AttentionName {
-            get {
-                return this.attentionNameField;
-            }
-            set {
-                this.attentionNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string UPSAccessPointID {
-            get {
-                return this.uPSAccessPointIDField;
-            }
-            set {
-                this.uPSAccessPointIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ADLAddressType Address {
+        public ADRType Address {
             get {
                 return this.addressField;
             }
@@ -7453,152 +4213,16 @@ namespace ShippingAPI.WebReference1 {
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ShipToAddressType))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipAddressType {
-        
-        private string[] addressLineField;
-        
-        private string cityField;
-        
-        private string stateProvinceCodeField;
-        
-        private string postalCodeField;
-        
-        private string countryCodeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AddressLine")]
-        public string[] AddressLine {
-            get {
-                return this.addressLineField;
-            }
-            set {
-                this.addressLineField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string City {
-            get {
-                return this.cityField;
-            }
-            set {
-                this.cityField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string StateProvinceCode {
-            get {
-                return this.stateProvinceCodeField;
-            }
-            set {
-                this.stateProvinceCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PostalCode {
-            get {
-                return this.postalCodeField;
-            }
-            set {
-                this.postalCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CountryCode {
-            get {
-                return this.countryCodeField;
-            }
-            set {
-                this.countryCodeField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipToAddressType : ShipAddressType {
-        
-        private string residentialAddressIndicatorField;
-        
-        /// <remarks/>
-        public string ResidentialAddressIndicator {
-            get {
-                return this.residentialAddressIndicatorField;
-            }
-            set {
-                this.residentialAddressIndicatorField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class TaxIDCodeDescType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ShipFromType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ShipToType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ShipperType))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class CompanyInfoType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipFromType {
         
         private string nameField;
         
-        private string attentionNameField;
-        
-        private string companyDisplayableNameField;
-        
-        private string taxIdentificationNumberField;
-        
-        private TaxIDCodeDescType taxIDTypeField;
-        
-        private ShipPhoneType phoneField;
+        private ShipAddressType addressField;
         
         /// <remarks/>
         public string Name {
@@ -7607,81 +4231,6 @@ namespace ShippingAPI.WebReference1 {
             }
             set {
                 this.nameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string AttentionName {
-            get {
-                return this.attentionNameField;
-            }
-            set {
-                this.attentionNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CompanyDisplayableName {
-            get {
-                return this.companyDisplayableNameField;
-            }
-            set {
-                this.companyDisplayableNameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string TaxIdentificationNumber {
-            get {
-                return this.taxIdentificationNumberField;
-            }
-            set {
-                this.taxIdentificationNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public TaxIDCodeDescType TaxIDType {
-            get {
-                return this.taxIDTypeField;
-            }
-            set {
-                this.taxIDTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipPhoneType Phone {
-            get {
-                return this.phoneField;
-            }
-            set {
-                this.phoneField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipFromType : CompanyInfoType {
-        
-        private string faxNumberField;
-        
-        private ShipAddressType addressField;
-        
-        private string eMailAddressField;
-        
-        /// <remarks/>
-        public string FaxNumber {
-            get {
-                return this.faxNumberField;
-            }
-            set {
-                this.faxNumberField = value;
             }
         }
         
@@ -7694,16 +4243,6 @@ namespace ShippingAPI.WebReference1 {
                 this.addressField = value;
             }
         }
-        
-        /// <remarks/>
-        public string EMailAddress {
-            get {
-                return this.eMailAddressField;
-            }
-            set {
-                this.eMailAddressField = value;
-            }
-        }
     }
     
     /// <remarks/>
@@ -7711,34 +4250,20 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipToType : CompanyInfoType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipToType {
         
-        private string faxNumberField;
-        
-        private string eMailAddressField;
+        private string nameField;
         
         private ShipToAddressType addressField;
         
-        private string locationIDField;
-        
         /// <remarks/>
-        public string FaxNumber {
+        public string Name {
             get {
-                return this.faxNumberField;
+                return this.nameField;
             }
             set {
-                this.faxNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EMailAddress {
-            get {
-                return this.eMailAddressField;
-            }
-            set {
-                this.eMailAddressField = value;
+                this.nameField = value;
             }
         }
         
@@ -7751,16 +4276,6 @@ namespace ShippingAPI.WebReference1 {
                 this.addressField = value;
             }
         }
-        
-        /// <remarks/>
-        public string LocationID {
-            get {
-                return this.locationIDField;
-            }
-            set {
-                this.locationIDField = value;
-            }
-        }
     }
     
     /// <remarks/>
@@ -7768,16 +4283,24 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipperType : CompanyInfoType {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class ShipperType {
+        
+        private string nameField;
         
         private string shipperNumberField;
         
-        private string faxNumberField;
+        private AddressType addressField;
         
-        private string eMailAddressField;
-        
-        private ShipAddressType addressField;
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
         
         /// <remarks/>
         public string ShipperNumber {
@@ -7790,27 +4313,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public string FaxNumber {
-            get {
-                return this.faxNumberField;
-            }
-            set {
-                this.faxNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string EMailAddress {
-            get {
-                return this.eMailAddressField;
-            }
-            set {
-                this.eMailAddressField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipAddressType Address {
+        public AddressType Address {
             get {
                 return this.addressField;
             }
@@ -7825,57 +4328,22 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ReturnServiceType {
-        
-        private string codeField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public string Code {
-            get {
-                return this.codeField;
-            }
-            set {
-                this.codeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
     public partial class ShipmentType {
         
-        private string descriptionField;
-        
-        private ReturnServiceType returnServiceField;
-        
-        private string documentsOnlyIndicatorField;
+        private string originRecordTransactionTimestampField;
         
         private ShipperType shipperField;
         
         private ShipToType shipToField;
         
-        private AlternateDeliveryAddressType alternateDeliveryAddressField;
-        
         private ShipFromType shipFromField;
         
-        private PaymentInfoType paymentInformationField;
+        private AlternateDeliveryAddressType alternateDeliveryAddressField;
+        
+        private IndicationType[] shipmentIndicationTypeField;
+        
+        private PaymentDetailsType paymentDetailsField;
         
         private FRSPaymentInfoType fRSPaymentInformationField;
         
@@ -7883,35 +4351,21 @@ namespace ShippingAPI.WebReference1 {
         
         private string goodsNotInFreeCirculationIndicatorField;
         
-        private RateInfoType shipmentRatingOptionsField;
+        private CodeDescriptionType serviceField;
         
-        private string movementReferenceNumberField;
+        private string numOfPiecesField;
         
-        private ReferenceNumberType[] referenceNumberField;
+        private ShipmentWeightType shipmentTotalWeightField;
         
-        private ServiceType serviceField;
+        private string documentsOnlyIndicatorField;
         
-        private CurrencyMonetaryType invoiceLineTotalField;
+        private PackageType[] packageField;
         
-        private string numOfPiecesInShipmentField;
+        private ShipmentServiceOptionsType shipmentServiceOptionsField;
         
-        private string uSPSEndorsementField;
+        private ShipmentRatingOptionsType shipmentRatingOptionsField;
         
-        private string mILabelCN22IndicatorField;
-        
-        private string subClassificationField;
-        
-        private string costCenterField;
-        
-        private string packageIDField;
-        
-        private string irregularIndicatorField;
-        
-        private IndicationType[] shipmentIndicationTypeField;
-        
-        private string mIDualReturnShipmentKeyField;
-        
-        private string mIDualReturnShipmentIndicatorField;
+        private InvoiceLineTotalType invoiceLineTotalField;
         
         private string ratingMethodRequestedIndicatorField;
         
@@ -7919,37 +4373,15 @@ namespace ShippingAPI.WebReference1 {
         
         private PromotionalDiscountInformationType promotionalDiscountInformationField;
         
-        private ShipmentTypeShipmentServiceOptions shipmentServiceOptionsField;
-        
-        private PackageType[] packageField;
+        private TimeInTransitRequestType deliveryTimeInformationField;
         
         /// <remarks/>
-        public string Description {
+        public string OriginRecordTransactionTimestamp {
             get {
-                return this.descriptionField;
+                return this.originRecordTransactionTimestampField;
             }
             set {
-                this.descriptionField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ReturnServiceType ReturnService {
-            get {
-                return this.returnServiceField;
-            }
-            set {
-                this.returnServiceField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string DocumentsOnlyIndicator {
-            get {
-                return this.documentsOnlyIndicatorField;
-            }
-            set {
-                this.documentsOnlyIndicatorField = value;
+                this.originRecordTransactionTimestampField = value;
             }
         }
         
@@ -7974,16 +4406,6 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public AlternateDeliveryAddressType AlternateDeliveryAddress {
-            get {
-                return this.alternateDeliveryAddressField;
-            }
-            set {
-                this.alternateDeliveryAddressField = value;
-            }
-        }
-        
-        /// <remarks/>
         public ShipFromType ShipFrom {
             get {
                 return this.shipFromField;
@@ -7994,12 +4416,33 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public PaymentInfoType PaymentInformation {
+        public AlternateDeliveryAddressType AlternateDeliveryAddress {
             get {
-                return this.paymentInformationField;
+                return this.alternateDeliveryAddressField;
             }
             set {
-                this.paymentInformationField = value;
+                this.alternateDeliveryAddressField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ShipmentIndicationType")]
+        public IndicationType[] ShipmentIndicationType {
+            get {
+                return this.shipmentIndicationTypeField;
+            }
+            set {
+                this.shipmentIndicationTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public PaymentDetailsType PaymentDetails {
+            get {
+                return this.paymentDetailsField;
+            }
+            set {
+                this.paymentDetailsField = value;
             }
         }
         
@@ -8034,38 +4477,7 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public RateInfoType ShipmentRatingOptions {
-            get {
-                return this.shipmentRatingOptionsField;
-            }
-            set {
-                this.shipmentRatingOptionsField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MovementReferenceNumber {
-            get {
-                return this.movementReferenceNumberField;
-            }
-            set {
-                this.movementReferenceNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ReferenceNumber")]
-        public ReferenceNumberType[] ReferenceNumber {
-            get {
-                return this.referenceNumberField;
-            }
-            set {
-                this.referenceNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ServiceType Service {
+        public CodeDescriptionType Service {
             get {
                 return this.serviceField;
             }
@@ -8075,113 +4487,73 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public CurrencyMonetaryType InvoiceLineTotal {
+        public string NumOfPieces {
+            get {
+                return this.numOfPiecesField;
+            }
+            set {
+                this.numOfPiecesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ShipmentWeightType ShipmentTotalWeight {
+            get {
+                return this.shipmentTotalWeightField;
+            }
+            set {
+                this.shipmentTotalWeightField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DocumentsOnlyIndicator {
+            get {
+                return this.documentsOnlyIndicatorField;
+            }
+            set {
+                this.documentsOnlyIndicatorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Package")]
+        public PackageType[] Package {
+            get {
+                return this.packageField;
+            }
+            set {
+                this.packageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ShipmentServiceOptionsType ShipmentServiceOptions {
+            get {
+                return this.shipmentServiceOptionsField;
+            }
+            set {
+                this.shipmentServiceOptionsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ShipmentRatingOptionsType ShipmentRatingOptions {
+            get {
+                return this.shipmentRatingOptionsField;
+            }
+            set {
+                this.shipmentRatingOptionsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public InvoiceLineTotalType InvoiceLineTotal {
             get {
                 return this.invoiceLineTotalField;
             }
             set {
                 this.invoiceLineTotalField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string NumOfPiecesInShipment {
-            get {
-                return this.numOfPiecesInShipmentField;
-            }
-            set {
-                this.numOfPiecesInShipmentField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string USPSEndorsement {
-            get {
-                return this.uSPSEndorsementField;
-            }
-            set {
-                this.uSPSEndorsementField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MILabelCN22Indicator {
-            get {
-                return this.mILabelCN22IndicatorField;
-            }
-            set {
-                this.mILabelCN22IndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string SubClassification {
-            get {
-                return this.subClassificationField;
-            }
-            set {
-                this.subClassificationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string CostCenter {
-            get {
-                return this.costCenterField;
-            }
-            set {
-                this.costCenterField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string PackageID {
-            get {
-                return this.packageIDField;
-            }
-            set {
-                this.packageIDField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string IrregularIndicator {
-            get {
-                return this.irregularIndicatorField;
-            }
-            set {
-                this.irregularIndicatorField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ShipmentIndicationType")]
-        public IndicationType[] ShipmentIndicationType {
-            get {
-                return this.shipmentIndicationTypeField;
-            }
-            set {
-                this.shipmentIndicationTypeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MIDualReturnShipmentKey {
-            get {
-                return this.mIDualReturnShipmentKeyField;
-            }
-            set {
-                this.mIDualReturnShipmentKeyField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string MIDualReturnShipmentIndicator {
-            get {
-                return this.mIDualReturnShipmentIndicatorField;
-            }
-            set {
-                this.mIDualReturnShipmentIndicatorField = value;
             }
         }
         
@@ -8216,34 +4588,14 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public ShipmentTypeShipmentServiceOptions ShipmentServiceOptions {
+        public TimeInTransitRequestType DeliveryTimeInformation {
             get {
-                return this.shipmentServiceOptionsField;
+                return this.deliveryTimeInformationField;
             }
             set {
-                this.shipmentServiceOptionsField = value;
+                this.deliveryTimeInformationField = value;
             }
         }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Package")]
-        public PackageType[] Package {
-            get {
-                return this.packageField;
-            }
-            set {
-                this.packageField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipmentTypeShipmentServiceOptions : ShipmentServiceOptionsType {
     }
     
     /// <remarks/>
@@ -8318,16 +4670,16 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipmentRequest {
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class RateRequest {
         
         private RequestType requestField;
         
+        private CodeDescriptionType pickupTypeField;
+        
+        private CodeDescriptionType customerClassificationField;
+        
         private ShipmentType shipmentField;
-        
-        private LabelSpecificationType labelSpecificationField;
-        
-        private ReceiptSpecificationType receiptSpecificationField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0")]
@@ -8337,6 +4689,26 @@ namespace ShippingAPI.WebReference1 {
             }
             set {
                 this.requestField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public CodeDescriptionType PickupType {
+            get {
+                return this.pickupTypeField;
+            }
+            set {
+                this.pickupTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public CodeDescriptionType CustomerClassification {
+            get {
+                return this.customerClassificationField;
+            }
+            set {
+                this.customerClassificationField = value;
             }
         }
         
@@ -8349,26 +4721,6 @@ namespace ShippingAPI.WebReference1 {
                 this.shipmentField = value;
             }
         }
-        
-        /// <remarks/>
-        public LabelSpecificationType LabelSpecification {
-            get {
-                return this.labelSpecificationField;
-            }
-            set {
-                this.labelSpecificationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ReceiptSpecificationType ReceiptSpecification {
-            get {
-                return this.receiptSpecificationField;
-            }
-            set {
-                this.receiptSpecificationField = value;
-            }
-        }
     }
     
     /// <remarks/>
@@ -8376,12 +4728,12 @@ namespace ShippingAPI.WebReference1 {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipmentResponse {
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ups.com/XMLSchema/XOLTWS/Rate/v1.1")]
+    public partial class RateResponse {
         
         private ResponseType responseField;
         
-        private ShipmentResultsType shipmentResultsField;
+        private RatedShipmentType[] ratedShipmentField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0")]
@@ -8395,250 +4747,39 @@ namespace ShippingAPI.WebReference1 {
         }
         
         /// <remarks/>
-        public ShipmentResultsType ShipmentResults {
+        [System.Xml.Serialization.XmlElementAttribute("RatedShipment")]
+        public RatedShipmentType[] RatedShipment {
             get {
-                return this.shipmentResultsField;
+                return this.ratedShipmentField;
             }
             set {
-                this.shipmentResultsField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipConfirmRequest {
-        
-        private RequestType requestField;
-        
-        private ShipmentType shipmentField;
-        
-        private LabelSpecificationType labelSpecificationField;
-        
-        private ReceiptSpecificationType receiptSpecificationField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0")]
-        public RequestType Request {
-            get {
-                return this.requestField;
-            }
-            set {
-                this.requestField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipmentType Shipment {
-            get {
-                return this.shipmentField;
-            }
-            set {
-                this.shipmentField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public LabelSpecificationType LabelSpecification {
-            get {
-                return this.labelSpecificationField;
-            }
-            set {
-                this.labelSpecificationField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ReceiptSpecificationType ReceiptSpecification {
-            get {
-                return this.receiptSpecificationField;
-            }
-            set {
-                this.receiptSpecificationField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipConfirmResponse {
-        
-        private ResponseType responseField;
-        
-        private ShipmentResultsType shipmentResultsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0")]
-        public ResponseType Response {
-            get {
-                return this.responseField;
-            }
-            set {
-                this.responseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipmentResultsType ShipmentResults {
-            get {
-                return this.shipmentResultsField;
-            }
-            set {
-                this.shipmentResultsField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipAcceptRequest {
-        
-        private RequestType requestField;
-        
-        private string shipmentDigestField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0")]
-        public RequestType Request {
-            get {
-                return this.requestField;
-            }
-            set {
-                this.requestField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string ShipmentDigest {
-            get {
-                return this.shipmentDigestField;
-            }
-            set {
-                this.shipmentDigestField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.ups.com/XMLSchema/XOLTWS/Ship/v1.0")]
-    public partial class ShipAcceptResponse {
-        
-        private ResponseType responseField;
-        
-        private ShipmentResultsType shipmentResultsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://www.ups.com/XMLSchema/XOLTWS/Common/v1.0")]
-        public ResponseType Response {
-            get {
-                return this.responseField;
-            }
-            set {
-                this.responseField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public ShipmentResultsType ShipmentResults {
-            get {
-                return this.shipmentResultsField;
-            }
-            set {
-                this.shipmentResultsField = value;
+                this.ratedShipmentField = value;
             }
         }
     }
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void ProcessShipmentCompletedEventHandler(object sender, ProcessShipmentCompletedEventArgs e);
+    public delegate void ProcessRateCompletedEventHandler(object sender, ProcessRateCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ProcessShipmentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class ProcessRateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal ProcessShipmentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal ProcessRateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
         /// <remarks/>
-        public ShipmentResponse Result {
+        public RateResponse Result {
             get {
                 this.RaiseExceptionIfNecessary();
-                return ((ShipmentResponse)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void ProcessShipConfirmCompletedEventHandler(object sender, ProcessShipConfirmCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ProcessShipConfirmCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal ProcessShipConfirmCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public ShipConfirmResponse Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((ShipConfirmResponse)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    public delegate void ProcessShipAcceptCompletedEventHandler(object sender, ProcessShipAcceptCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class ProcessShipAcceptCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal ProcessShipAcceptCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public ShipAcceptResponse Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((ShipAcceptResponse)(this.results[0]));
+                return ((RateResponse)(this.results[0]));
             }
         }
     }

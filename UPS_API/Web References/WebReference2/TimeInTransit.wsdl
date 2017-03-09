@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tnt="http://www.ups.com/XMLSchema/XOLTWS/tnt/v1.0" xmlns:upss="http://www.ups.com/XMLSchema/XOLTWS/UPSS/v1.0" xmlns:tns="http://www.ups.com/WSDL/XOLTWS/TNT/v1.0" xmlns:error="http://www.ups.com/XMLSchema/XOLTWS/Error/v1.1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TimeInTransit" targetNamespace="http://www.ups.com/WSDL/XOLTWS/TNT/v1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import schemaLocation="UPSSecurity.xsd" namespace="http://www.ups.com/XMLSchema/XOLTWS/UPSS/v1.0" />
+      <xsd:import schemaLocation="Error1.1.xsd" namespace="http://www.ups.com/XMLSchema/XOLTWS/Error/v1.1" />
+      <xsd:import schemaLocation="TimeInTransitWebServiceSchema.xsd" namespace="http://www.ups.com/XMLSchema/XOLTWS/tnt/v1.0" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="TimeInTransitRequestMessage">
+    <wsdl:part name="Body" element="tnt:TimeInTransitRequest" />
+    <wsdl:part name="UPSSecurity" element="upss:UPSSecurity" />
+  </wsdl:message>
+  <wsdl:message name="TimeInTransitResponseMessage">
+    <wsdl:part name="Body" element="tnt:TimeInTransitResponse" />
+  </wsdl:message>
+  <wsdl:message name="TimeInTransitErrorMessage">
+    <wsdl:part name="TimeInTransitError" element="error:Errors" />
+  </wsdl:message>
+  <wsdl:portType name="TimeInTransitPortType">
+    <wsdl:operation name="ProcessTimeInTransit">
+      <wsdl:input name="TimeInTransitRequest" message="tns:TimeInTransitRequestMessage" />
+      <wsdl:output name="TimeInTransitResponse" message="tns:TimeInTransitResponseMessage" />
+      <wsdl:fault name="TimeInTransitError" message="tns:TimeInTransitErrorMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TimeInTransitBinding" type="tns:TimeInTransitPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ProcessTimeInTransit">
+      <soap:operation soapAction="http://onlinetools.ups.com/webservices/TimeInTransitBinding/v1.0" style="document" />
+      <wsdl:input name="TimeInTransitRequest">
+        <soap:body use="literal" parts="Body" />
+        <soap:header message="tns:TimeInTransitRequestMessage" part="UPSSecurity" use="literal">
+          <soap:headerfault message="tns:TimeInTransitErrorMessage" part="TimeInTransitError" use="literal" />
+        </soap:header>
+      </wsdl:input>
+      <wsdl:output name="TimeInTransitResponse">
+        <soap:body use="literal" parts="Body" />
+      </wsdl:output>
+      <wsdl:fault name="TimeInTransitError">
+        <soap:fault use="literal" name="TimeInTransitError" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TimeInTransitService">
+    <wsdl:port name="TimeInTransitPort" binding="tns:TimeInTransitBinding">
+      <soap:address location="https://wwwcie.ups.com/webservices/TimeInTransit" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

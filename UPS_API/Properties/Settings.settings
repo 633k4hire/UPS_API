@@ -1,15 +1,18 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RateWSSample.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ShippingAPI.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="RateWSSample_RateWebReference_RateService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://wwwcie.ups.com/webservices/Rate</Value>
     </Setting>
-    <Setting Name="RateWSSample_WebReference_RateService" Type="(Web Service URL)" Scope="Application">
+    <Setting Name="ShippingAPI_WebReference_ShipService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://wwwcie.ups.com/webservices/Ship</Value>
+    </Setting>
+    <Setting Name="ShippingAPI_WebReference1_RateService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://wwwcie.ups.com/webservices/Rate</Value>
     </Setting>
-    <Setting Name="RateWSSample_WebReference1_ShipService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://wwwcie.ups.com/webservices/Ship</Value>
+    <Setting Name="ShippingAPI_WebReference2_TimeInTransitService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://wwwcie.ups.com/webservices/TimeInTransit</Value>
     </Setting>
   </Settings>
 </SettingsFile>

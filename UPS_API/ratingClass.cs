@@ -1,36 +1,44 @@
 ﻿using System;
 using System.Net;
-using ShippingAPI.WebReference;
+
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using ShippingAPI.WebReference1;
 
 namespace ShippingAPI
 {
-    public class Rate
+    public class ExceptionOccured : EventArgs
     {
-        public class ExceptionOccured : EventArgs
+        public ExceptionOccured(Exception ex = null)
         {
-            public ExceptionOccured(Exception ex = null)
+            if (ex != null)
             {
-                if (ex != null)
-                {
-                    Exception = ex;
-                }
+                Exception = ex;
             }
-            public Exception Exception { get; set; }
         }
-        public class SoapExceptionOccured : EventArgs
+        public Exception Exception { get; set; }
+    }
+    public class SoapExceptionOccured : EventArgs
+    {
+        public SoapExceptionOccured(System.Web.Services.Protocols.SoapException ex = null)
         {
-            public SoapExceptionOccured(System.Web.Services.Protocols.SoapException ex = null)
+            if (ex != null)
             {
-                if (ex != null)
-                {
-                    Exception = ex;
-                }
+                Exception = ex;
             }
-            public System.Web.Services.Protocols.SoapException Exception { get; set; }
         }
+        public System.Web.Services.Protocols.SoapException Exception { get; set; }
+    }
 
+    public class Rate : ICloneable
+    {
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
         public class ReturnEvent : EventArgs
         {
             public ReturnEvent(RESPONSE obj = null)
@@ -50,6 +58,7 @@ namespace ShippingAPI
             public string ResponseStatus;
             public Image Label;
             public string Price;
+            public string Negotiated;
             public object Tag;
             public List<Exception> Exceptions = new List<Exception>();
         }
@@ -126,7 +135,7 @@ namespace ShippingAPI
 
             return this;
         }
-        public ShippingAPI.WebReference.AddressType ShipperAddress;
+        public AddressType ShipperAddress;
         public Rate SetOption(string Option)
         {
             this._Request = new RequestType();
@@ -138,7 +147,7 @@ namespace ShippingAPI
         public Rate AddShipper(Address address)
         {
             //shipper
-            ShipperAddress = new ShippingAPI.WebReference.AddressType();
+            ShipperAddress = new AddressType();
             String[] addressLine = address.AddressLine;
             ShipperAddress.AddressLine = addressLine;
             ShipperAddress.City = address.City;
@@ -154,7 +163,7 @@ namespace ShippingAPI
         public Rate AddShipFrom(Address address)
         {
             this._ShipFrom = new ShipFromType();
-            ShippingAPI.WebReference.ShipAddressType shipFromAddress = new ShippingAPI.WebReference.ShipAddressType();
+            ShipAddressType shipFromAddress = new ShipAddressType();
             shipFromAddress.AddressLine = address.AddressLine;
             shipFromAddress.City = address.City;
             shipFromAddress.PostalCode = address.Postal;
@@ -249,6 +258,24 @@ namespace ShippingAPI
             _RateRequest.Shipment = _Shipment;
             return this;
         }
+        public Rate FlagNegotiatedRate(bool negotiated = false)
+        {
+            try
+            {
+                if (negotiated)
+                {
+                    ShipmentRatingOptionsType rt = new ShipmentRatingOptionsType();
+                    rt.NegotiatedRatesIndicator = "";
+                    _RateRequest.Shipment.ShipmentRatingOptions = rt;
+                    this._Shipment.ShipmentRatingOptions = rt;
+                }
+            }
+            catch(Exception ex) {
+                newException(new ExceptionOccured(ex));
+            }
+            return this;
+        }
+
         public RateResponse RateResponse;
         public string _ShippingCharges;
         public RESPONSE SubmitRateRequest()
@@ -257,16 +284,22 @@ namespace ShippingAPI
             {
                 if (NetInfo.CheckForInternetConnection())
                 {
-                    System.Net.ServicePointManager.CertificatePolicy = new TrustAllCertificatePolicy();
-                    //Console.WriteLine(_RateRequest);
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                    ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
+                    ////Console.WriteLine(_RateRequest);
                     this.RateResponse = _Rate.ProcessRate(_RateRequest);
                     _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
-                    Console.WriteLine("The transaction was a " + this.RateResponse.Response.ResponseStatus.Description);
-                    Console.WriteLine("Total Shipment Charges " + this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode);
+                    //Console.WriteLine("The transaction was a " + this.RateResponse.Response.ResponseStatus.Description);
+                    //Console.WriteLine("Total Shipment Charges " + this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode);
                     //Console.ReadKey();
                     RESPONSE responce = new RESPONSE();
                     responce.Response = RateResponse;
                     responce.Exceptions = Exceptions;
+                    try
+                    {
+                        responce.Negotiated = RateResponse.RatedShipment[0].NegotiatedRateCharges.TotalCharge.MonetaryValue + RateResponse.RatedShipment[0].NegotiatedRateCharges.TotalCharge.CurrencyCode;
+                    }
+                    catch { }
                     responce.ResponseStatus = this.RateResponse.Response.ResponseStatus.Description;
                     responce.Price = _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
                     ReturnReady(new ReturnEvent(responce));
@@ -277,114 +310,64 @@ namespace ShippingAPI
             catch (System.Web.Services.Protocols.SoapException ex)
             {
                 newException(new ExceptionOccured(ex));
-                Console.WriteLine("");
-                Console.WriteLine("---------Rate Web Service returns error----------------");
-                Console.WriteLine("---------\"Hard\" is user error \"Transient\" is system error----------------");
-                Console.WriteLine("SoapException Message= " + ex.Message);
-                Console.WriteLine("");
-                Console.WriteLine("SoapException Category:Code:Message= " + ex.Detail.LastChild.InnerText);
-                Console.WriteLine("");
-                Console.WriteLine("SoapException XML String for all= " + ex.Detail.LastChild.OuterXml);
-                Console.WriteLine("");
-                Console.WriteLine("SoapException StackTrace= " + ex.StackTrace);
-                Console.WriteLine("-------------------------");
-                Console.WriteLine("");
+                //Console.WriteLine("");
+                //Console.WriteLine("---------Rate Web Service returns error----------------");
+                //Console.WriteLine("---------\"Hard\" is user error \"Transient\" is system error----------------");
+                //Console.WriteLine("SoapException Message= " + ex.Message);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException Category:Code:Message= " + ex.Detail.LastChild.InnerText);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException XML String for all= " + ex.Detail.LastChild.OuterXml);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
             }
             catch (System.ServiceModel.CommunicationException ex)
             {
                 newException(new ExceptionOccured(ex));
-                Console.WriteLine("");
-                Console.WriteLine("--------------------");
-                Console.WriteLine("CommunicationException= " + ex.Message);
-                Console.WriteLine("CommunicationException-StackTrace= " + ex.StackTrace);
-                Console.WriteLine("-------------------------");
-                Console.WriteLine("");
+                //Console.WriteLine("");
+                //Console.WriteLine("--------------------");
+                //Console.WriteLine("CommunicationException= " + ex.Message);
+                //Console.WriteLine("CommunicationException-StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
 
             }
             catch (Exception ex)
             {
                 newException(new ExceptionOccured(ex));
-                Console.WriteLine("");
-                Console.WriteLine("-------------------------");
-                Console.WriteLine(" Generaal Exception= " + ex.Message);
-                Console.WriteLine(" Generaal Exception-StackTrace= " + ex.StackTrace);
-                Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine(" Generaal Exception= " + ex.Message);
+                //Console.WriteLine(" Generaal Exception-StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
 
             }
             return null;
         }
-        public void SubmitRateRequestAsync()
+        public void SubmitRateRequestAsync(ProcessRateCompletedEventHandler handler=null)
         {           
-                try
-                {
+               
                 if (NetInfo.CheckForInternetConnection())
                 {
-                    System.Net.ServicePointManager.CertificatePolicy = new TrustAllCertificatePolicy();
-                    //Console.WriteLine(_RateRequest);\
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
+                ////Console.WriteLine(_RateRequest);\
+                if (handler != null)
+                {
+                    _Rate.ProcessRateCompleted += handler;
+                    _Rate.ProcessRateAsync(_RateRequest);
+                }else
+                {
                     _Rate.ProcessRateCompleted += _Rate_ProcessRateCompleted;
                     _Rate.ProcessRateAsync(_RateRequest);
+                }
 
                     return;
                 }                  
 
-                }
-                catch (System.Web.Services.Protocols.SoapException ex)
-                {
-                newSoapException(new SoapExceptionOccured(ex));
-                Console.WriteLine("");
-                    Console.WriteLine("---------Rate Web Service returns error----------------");
-                    Console.WriteLine("---------\"Hard\" is user error \"Transient\" is system error----------------");
-                    Console.WriteLine("SoapException Message= " + ex.Message);
-                    Console.WriteLine("");
-                    Console.WriteLine("SoapException Category:Code:Message= " + ex.Detail.LastChild.InnerText);
-                    Console.WriteLine("");
-                    Console.WriteLine("SoapException XML String for all= " + ex.Detail.LastChild.OuterXml);
-                    Console.WriteLine("");
-                    Console.WriteLine("SoapException StackTrace= " + ex.StackTrace);
-                    Console.WriteLine("-------------------------");
-                    Console.WriteLine("");
-                }
-                catch (System.ServiceModel.CommunicationException ex)
-                {
-                    newException(new ExceptionOccured(ex));
-                    Console.WriteLine("");
-                    Console.WriteLine("--------------------");
-                    Console.WriteLine("CommunicationException= " + ex.Message);
-                    Console.WriteLine("CommunicationException-StackTrace= " + ex.StackTrace);
-                    Console.WriteLine("-------------------------");
-                    Console.WriteLine("");
-
-                }
-                catch (Exception ex)
-                {
-                    newException(new ExceptionOccured(ex));
-                    Console.WriteLine("");
-                    Console.WriteLine("-------------------------");
-                    Console.WriteLine(" Generaal Exception= " + ex.Message);
-                    Console.WriteLine(" Generaal Exception-StackTrace= " + ex.StackTrace);
-                    Console.WriteLine("-------------------------");
-
-                }
-            return ;
         }
-
-        private void _Rate_ProcessRateCompleted(object sender, ProcessRateCompletedEventArgs e)
-        {
-            this.RateResponse = e.Result;
-            _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
-            Console.WriteLine("The transaction was a " + this.RateResponse.Response.ResponseStatus.Description);
-            Console.WriteLine("Total Shipment Charges " + this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode);
-            //Console.ReadKey();
-            RESPONSE responce = new RESPONSE();
-            responce.Response = RateResponse;
-            responce.Exceptions = Exceptions;
-            responce.ResponseStatus = this.RateResponse.Response.ResponseStatus.Description;
-            responce.Price = _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
-            ReturnReady(new ReturnEvent(responce));
-          
-        }
-
-        public RESPONSE _RESPONSE;
         public Rate SubmitRateRequest(Address shipper, Address shipFrom, Address shipTo, UPScode code, Package package)
         {
             try
@@ -396,133 +379,143 @@ namespace ShippingAPI
                     AddShipTo(shipTo);
                     SelectServiceCode(code);
                     AddPackage(package);
-                    System.Net.ServicePointManager.CertificatePolicy = new TrustAllCertificatePolicy();
-                    //Console.WriteLine(_RateRequest);
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                    ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
+                    ////Console.WriteLine(_RateRequest);
+                    _RateRequest.Shipment.Service = _Service;
                     this.RateResponse = _Rate.ProcessRate(_RateRequest);
                     _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
-                    Console.WriteLine("The transaction was a " + this.RateResponse.Response.ResponseStatus.Description);
-                    Console.WriteLine("Total Shipment Charges " + this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode);
-                    //Console.ReadKey();
+                    
+                    //Console.WriteLine("The transaction was a " + this.RateResponse.Response.ResponseStatus.Description);
+                    //Console.WriteLine("Total Shipment Charges " + this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode);
+                    //Console.ReadKey();                    
                     _RESPONSE = new RESPONSE();
+                    try
+                    {
+                        _RESPONSE.Negotiated = RateResponse.RatedShipment[0].NegotiatedRateCharges.TotalCharge.MonetaryValue + RateResponse.RatedShipment[0].NegotiatedRateCharges.TotalCharge.CurrencyCode;
+                    }
+                    catch { }
                     _RESPONSE.Response = RateResponse;
                     _RESPONSE.Exceptions = Exceptions;
+                    _RESPONSE.Exceptions = Exceptions;
+                    try
+                    {
+                        _RESPONSE.Negotiated = RateResponse.RatedShipment[0].NegotiatedRateCharges.TotalCharge.MonetaryValue + RateResponse.RatedShipment[0].NegotiatedRateCharges.TotalCharge.CurrencyCode;
+                    }
+                    catch { }
                     _RESPONSE.ResponseStatus = this.RateResponse.Response.ResponseStatus.Description;
                     _RESPONSE.Price = _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
                     ReturnReady(new ReturnEvent(_RESPONSE));
                 }
-                    
+
             }
             catch (System.Web.Services.Protocols.SoapException ex)
             {
                 newSoapException(new SoapExceptionOccured(ex));
-                Console.WriteLine("");
-                Console.WriteLine("---------Rate Web Service returns error----------------");
-                Console.WriteLine("---------\"Hard\" is user error \"Transient\" is system error----------------");
-                Console.WriteLine("SoapException Message= " + ex.Message);
-                Console.WriteLine("");
-                Console.WriteLine("SoapException Category:Code:Message= " + ex.Detail.LastChild.InnerText);
-                Console.WriteLine("");
-                Console.WriteLine("SoapException XML String for all= " + ex.Detail.LastChild.OuterXml);
-                Console.WriteLine("");
-                Console.WriteLine("SoapException StackTrace= " + ex.StackTrace);
-                Console.WriteLine("-------------------------");
-                Console.WriteLine("");
+                //Console.WriteLine("");
+                //Console.WriteLine("---------Rate Web Service returns error----------------");
+                //Console.WriteLine("---------\"Hard\" is user error \"Transient\" is system error----------------");
+                //Console.WriteLine("SoapException Message= " + ex.Message);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException Category:Code:Message= " + ex.Detail.LastChild.InnerText);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException XML String for all= " + ex.Detail.LastChild.OuterXml);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
             }
             catch (System.ServiceModel.CommunicationException ex)
             {
                 newException(new ExceptionOccured(ex));
-                Console.WriteLine("");
-                Console.WriteLine("--------------------");
-                Console.WriteLine("CommunicationException= " + ex.Message);
-                Console.WriteLine("CommunicationException-StackTrace= " + ex.StackTrace);
-                Console.WriteLine("-------------------------");
-                Console.WriteLine("");
+                //Console.WriteLine("");
+                //Console.WriteLine("--------------------");
+                //Console.WriteLine("CommunicationException= " + ex.Message);
+                //Console.WriteLine("CommunicationException-StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
 
             }
             catch (Exception ex)
             {
                 newException(new ExceptionOccured(ex));
-                Console.WriteLine("");
-                Console.WriteLine("-------------------------");
-                Console.WriteLine(" Generaal Exception= " + ex.Message);
-                Console.WriteLine(" Generaal Exception-StackTrace= " + ex.StackTrace);
-                Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine(" Generaal Exception= " + ex.Message);
+                //Console.WriteLine(" Generaal Exception-StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
 
             }
             return this;
         }
-        public void SubmitRateRequestAsync(Address shipper, Address shipFrom, Address shipTo, UPScode code, Package package)
+        public void SubmitRateRequestAsync(Address shipper, Address shipFrom, Address shipTo, UPScode code, Package package, ProcessRateCompletedEventHandler handler=null)
         {
-
-
             try
             {
+                AddShipper(shipper);
+                AddShipFrom(shipFrom);
+                AddShipTo(shipTo);
+                SelectServiceCode(code);
+                AddPackage(package);
                 if (NetInfo.CheckForInternetConnection())
                 {
-                    AddShipper(shipper);
-                    AddShipFrom(shipFrom);
-                    AddShipTo(shipTo);
-                    SelectServiceCode(code);
-                    AddPackage(package);
-                    System.Net.ServicePointManager.CertificatePolicy = new TrustAllCertificatePolicy();
-                    //Console.WriteLine(_RateRequest);
-                    _Rate.ProcessRateCompleted += _Rate_ProcessRateCompleted;
-                    _Rate.ProcessRateAsync(_RateRequest);
-                }
-            }
-            catch (System.Web.Services.Protocols.SoapException ex)
-            {
-                newSoapException(new SoapExceptionOccured(ex));
-                Console.WriteLine("");
-                Console.WriteLine("---------Rate Web Service returns error----------------");
-                Console.WriteLine("---------\"Hard\" is user error \"Transient\" is system error----------------");
-                Console.WriteLine("SoapException Message= " + ex.Message);
-                Console.WriteLine("");
-                Console.WriteLine("SoapException Category:Code:Message= " + ex.Detail.LastChild.InnerText);
-                Console.WriteLine("");
-                Console.WriteLine("SoapException XML String for all= " + ex.Detail.LastChild.OuterXml);
-                Console.WriteLine("");
-                Console.WriteLine("SoapException StackTrace= " + ex.StackTrace);
-                Console.WriteLine("-------------------------");
-                Console.WriteLine("");
-            }
-            catch (System.ServiceModel.CommunicationException ex)
-            {
-                newException(new ExceptionOccured(ex));
-                Console.WriteLine("");
-                Console.WriteLine("--------------------");
-                Console.WriteLine("CommunicationException= " + ex.Message);
-                Console.WriteLine("CommunicationException-StackTrace= " + ex.StackTrace);
-                Console.WriteLine("-------------------------");
-                Console.WriteLine("");
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                    ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
+                    ////Console.WriteLine(_RateRequest);\
+                    if (handler != null)
+                    {
+                        _Rate.ProcessRateCompleted += handler;
+                        
+                        _Rate.ProcessRateAsync(_RateRequest);
+                    }
+                    else
+                    {
+                        _Rate.ProcessRateCompleted += _Rate_ProcessRateCompleted;
+                        
+                        _Rate.ProcessRateAsync(_RateRequest);
+                    }
 
+                    return;
+                }
             }
             catch (Exception ex)
             {
                 newException(new ExceptionOccured(ex));
-                Console.WriteLine("");
-                Console.WriteLine("-------------------------");
-                Console.WriteLine(" Generaal Exception= " + ex.Message);
-                Console.WriteLine(" Generaal Exception-StackTrace= " + ex.StackTrace);
-                Console.WriteLine("-------------------------");
-
             }
-            return;
         }
-
-        private void _Rate_ProcessRateCompleted1(object sender, ProcessRateCompletedEventArgs e)
+        private void _Rate_ProcessRateCompleted(object sender, ProcessRateCompletedEventArgs e)
         {
-            this.RateResponse = e.Result;
-            _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
-            Console.WriteLine("The transaction was a " + this.RateResponse.Response.ResponseStatus.Description);
-            Console.WriteLine("Total Shipment Charges " + this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode);
-            //Console.ReadKey();
-            _RESPONSE = new RESPONSE();
-            _RESPONSE.Response = RateResponse;
-            _RESPONSE.Exceptions = Exceptions;
-            _RESPONSE.ResponseStatus = this.RateResponse.Response.ResponseStatus.Description;
-            _RESPONSE.Price = _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
-            ReturnReady(new ReturnEvent(_RESPONSE));
+            try
+            {
+                this.RateResponse = e.Result;
+                _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
+                //Console.WriteLine("The transaction was a " + this.RateResponse.Response.ResponseStatus.Description);
+                //Console.WriteLine("Total Shipment Charges " + this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode);
+                //Console.ReadKey();
+                RESPONSE responce = new RESPONSE();
+                responce.Response = RateResponse;
+
+                responce.Exceptions = Exceptions;
+                try
+                {
+                    responce.Negotiated = RateResponse.RatedShipment[0].NegotiatedRateCharges.TotalCharge.MonetaryValue + RateResponse.RatedShipment[0].NegotiatedRateCharges.TotalCharge.CurrencyCode;
+                }
+                catch (Exception exx) { }// newException(new ExceptionOccured(exx));
+                responce.ResponseStatus = this.RateResponse.Response.ResponseStatus.Description;
+                responce.Price = _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
+                ReturnReady(new ReturnEvent(responce));
+            }
+            catch(Exception ex)
+            {
+                newException(new ExceptionOccured(ex));
+            }
+          
+        }
+        public RESPONSE _RESPONSE;
+        public static bool CheckValidationResult(object sender, System.Security.Cryptography.X509Certificates.X509Certificate cert, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors errors)
+        {
+
+            return true;
         }
     }
     public class NetInfo
@@ -546,16 +539,8 @@ namespace ShippingAPI
         }
     }
 
-    public class TrustAllCertificatePolicy : System.Net.ICertificatePolicy
-    {
-        public TrustAllCertificatePolicy()
-        { }
+    
+  
 
-        public bool CheckValidationResult(ServicePoint sp,
-         System.Security.Cryptography.X509Certificates.X509Certificate cert, WebRequest req, int problem)
-        {
-            return true;
-        }
-    }
 }
 

@@ -36,20 +36,30 @@ namespace ShippingAPI.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://wwwcie.ups.com/webservices/Rate")]
-        public string RateWSSample_WebReference_RateService {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://wwwcie.ups.com/webservices/Ship")]
+        public string ShippingAPI_WebReference_ShipService {
             get {
-                return ((string)(this["RateWSSample_WebReference_RateService"]));
+                return ((string)(this["ShippingAPI_WebReference_ShipService"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://wwwcie.ups.com/webservices/Ship")]
-        public string RateWSSample_WebReference1_ShipService {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://wwwcie.ups.com/webservices/Rate")]
+        public string ShippingAPI_WebReference1_RateService {
             get {
-                return ((string)(this["RateWSSample_WebReference1_ShipService"]));
+                return ((string)(this["ShippingAPI_WebReference1_RateService"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://wwwcie.ups.com/webservices/TimeInTransit")]
+        public string ShippingAPI_WebReference2_TimeInTransitService {
+            get {
+                return ((string)(this["ShippingAPI_WebReference2_TimeInTransitService"]));
             }
         }
     }
