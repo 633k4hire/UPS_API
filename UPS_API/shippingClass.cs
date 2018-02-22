@@ -46,33 +46,45 @@ namespace ShippingAPI
             public Ship.RESPONSE Response { get; set; }
         }
         public static List<Exception> Exceptions = new List<Exception>();
-        protected virtual void newException(ExceptionOccured e)
-        {
-            Exceptions.Add(e.Exception);
-            EventHandler<ExceptionOccured> handler = ExceptionListener;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
         public event EventHandler<ExceptionOccured> ExceptionListener;
+        public event EventHandler<SoapExceptionOccured> SoapExceptionListener;
         protected virtual void newSoapException(SoapExceptionOccured e)
         {
-            Exceptions.Add(e.Exception);
-            EventHandler<SoapExceptionOccured> handler = SoapExceptionListener;
-            if (handler != null)
+            try
             {
-                handler(this, e);
+                Exceptions.Add(e.Exception);
+                EventHandler<SoapExceptionOccured> handler = SoapExceptionListener;
+                if (handler != null)
+                {
+                    handler(this, e);
+                }
             }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
         }
-        public event EventHandler<SoapExceptionOccured> SoapExceptionListener;
+        protected virtual void newException(ExceptionOccured e)
+        {
+            try
+            {
+                Exceptions.Add(e.Exception);
+                EventHandler<ExceptionOccured> handler = ExceptionListener;
+                if (handler != null)
+                {
+                    handler(this, e);
+                }
+            }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
+        }
         protected virtual void ReturnReady(ReturnEvent obj)
         {
-            EventHandler<ReturnEvent> handler = ReturnListener;
-            if (handler != null)
+            try
             {
-                handler(this, obj);
+                EventHandler<ReturnEvent> handler = ReturnListener;
+                if (handler != null)
+                {
+                    handler(this, obj);
+                }
             }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
         }
         public event EventHandler<ReturnEvent> ReturnListener;
         public static bool CheckValidationResult(object sender, System.Security.Cryptography.X509Certificates.X509Certificate cert, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors errors)
@@ -575,7 +587,7 @@ namespace ShippingAPI
                 {
 
                 }
-                    this.PackageType = new PackagingType();
+                    this.PackageType = new WebReference.PackagingType();
                 var values = Enum.GetValues(typeof(UPS_PackagingType));
                 int value = 02;
                 foreach (int val in values)
@@ -1031,7 +1043,7 @@ namespace ShippingAPI
             public PackageType _Package;
             public PackageWeightType PackageWeight;
             public ShipUnitOfMeasurementType ShipUnitOfMeasurementType;
-            public PackagingType PackageType;
+            public WebReference.PackagingType PackageType;
 
             //security
             public ShipService _ShipService;
@@ -1122,11 +1134,12 @@ namespace ShippingAPI
         public string Name;
         public string AttentionName;
         public string Phone;
+        public string Email;
     }
     public class Package
     {
         public string Weight;
-        public UPS_PackagingType PackType;
+        public UPS_PackagingType PackType = UPS_PackagingType.CustomerSupplied;
         public string reference = "";
         public string reference2 = "";
         public int H = 0;

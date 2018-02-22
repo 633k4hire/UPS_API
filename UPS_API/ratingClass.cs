@@ -63,34 +63,44 @@ namespace ShippingAPI
             public List<Exception> Exceptions = new List<Exception>();
         }
         public static List<Exception> Exceptions = new List<Exception>();
-        protected virtual void newException(ExceptionOccured e)
-        {
-            Exceptions.Add(e.Exception);
-            EventHandler<ExceptionOccured> handler = ExceptionListener;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
         public event EventHandler<ExceptionOccured> ExceptionListener;
+        public event EventHandler<SoapExceptionOccured> SoapExceptionListener;
         protected virtual void newSoapException(SoapExceptionOccured e)
         {
-            Exceptions.Add(e.Exception);
-            EventHandler<SoapExceptionOccured> handler = SoapExceptionListener;
-            if (handler != null)
+            try
             {
-                handler(this, e);
+                Exceptions.Add(e.Exception);
+                EventHandler<SoapExceptionOccured> handler = SoapExceptionListener;
+                if (handler != null)
+                {
+                    handler(this, e);
+                }
             }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
         }
-        public event EventHandler<SoapExceptionOccured> SoapExceptionListener;
-
+        protected virtual void newException(ExceptionOccured e)
+        {
+            try
+            {
+                Exceptions.Add(e.Exception);
+                EventHandler<ExceptionOccured> handler = ExceptionListener;
+                if (handler != null)
+                {
+                    handler(this, e);
+                }
+            }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
+        }
         protected virtual void ReturnReady(ReturnEvent obj)
         {
+            try { 
             EventHandler<ReturnEvent> handler = ReturnListener;
             if (handler != null)
             {
                 handler(this, obj);
             }
+            }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
         }
         public event EventHandler<ReturnEvent> ReturnListener;
         public Rate()
@@ -347,25 +357,56 @@ namespace ShippingAPI
             return null;
         }
         public void SubmitRateRequestAsync(ProcessRateCompletedEventHandler handler=null)
-        {           
-               
+        {
+
+            try
+            {
                 if (NetInfo.CheckForInternetConnection())
                 {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-                ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
-                ////Console.WriteLine(_RateRequest);\
-                if (handler != null)
-                {
-                    _Rate.ProcessRateCompleted += handler;
-                    _Rate.ProcessRateAsync(_RateRequest);
-                }else
-                {
-                    _Rate.ProcessRateCompleted += _Rate_ProcessRateCompleted;
-                    _Rate.ProcessRateAsync(_RateRequest);
-                }
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                    ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
+                    ////Console.WriteLine(_RateRequest);\
+                    if (handler != null)
+                    {
+                        _Rate.ProcessRateCompleted += handler;
+                        _Rate.ProcessRateAsync(_RateRequest);
+                    }
+                    else
+                    {
+                        _Rate.ProcessRateCompleted += _Rate_ProcessRateCompleted;
+                        _Rate.ProcessRateAsync(_RateRequest);
+                    }
 
                     return;
-                }                  
+                }
+
+            }
+            catch (System.Web.Services.Protocols.SoapException ex)
+            {
+                //Console.WriteLine("");
+                //Console.WriteLine("---------Ship Web Service returns error----------------");
+                //Console.WriteLine("---------\"Hard\" is user error \"Transient\" is system error----------------");
+                //Console.WriteLine("SoapException Message= " + ex.Message);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException Category:Code:Message= " + ex.Detail.LastChild.InnerText);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException XML String for all= " + ex.Detail.LastChild.OuterXml);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
+            }
+            catch (System.ServiceModel.CommunicationException ex)
+            {
+                //Console.WriteLine("");
+                //Console.WriteLine("--------------------");
+                //Console.WriteLine("CommunicationException= " + ex.Message);
+                //Console.WriteLine("CommunicationException-StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
+
+            }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
 
         }
         public Rate SubmitRateRequest(Address shipper, Address shipFrom, Address shipTo, UPScode code, Package package)
@@ -478,6 +519,31 @@ namespace ShippingAPI
                     return;
                 }
             }
+            catch (System.Web.Services.Protocols.SoapException ex)
+            {
+                //Console.WriteLine("");
+                //Console.WriteLine("---------Ship Web Service returns error----------------");
+                //Console.WriteLine("---------\"Hard\" is user error \"Transient\" is system error----------------");
+                //Console.WriteLine("SoapException Message= " + ex.Message);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException Category:Code:Message= " + ex.Detail.LastChild.InnerText);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException XML String for all= " + ex.Detail.LastChild.OuterXml);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
+            }
+            catch (System.ServiceModel.CommunicationException ex)
+            {
+                //Console.WriteLine("");
+                //Console.WriteLine("--------------------");
+                //Console.WriteLine("CommunicationException= " + ex.Message);
+                //Console.WriteLine("CommunicationException-StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
+
+            }
             catch (Exception ex)
             {
                 newException(new ExceptionOccured(ex));
@@ -505,7 +571,32 @@ namespace ShippingAPI
                 responce.Price = _ShippingCharges = this.RateResponse.RatedShipment[0].TotalCharges.MonetaryValue + this.RateResponse.RatedShipment[0].TotalCharges.CurrencyCode;
                 ReturnReady(new ReturnEvent(responce));
             }
-            catch(Exception ex)
+            catch (System.Web.Services.Protocols.SoapException ex)
+            {
+                //Console.WriteLine("");
+                //Console.WriteLine("---------Ship Web Service returns error----------------");
+                //Console.WriteLine("---------\"Hard\" is user error \"Transient\" is system error----------------");
+                //Console.WriteLine("SoapException Message= " + ex.Message);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException Category:Code:Message= " + ex.Detail.LastChild.InnerText);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException XML String for all= " + ex.Detail.LastChild.OuterXml);
+                //Console.WriteLine("");
+                //Console.WriteLine("SoapException StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
+            }
+            catch (System.ServiceModel.CommunicationException ex)
+            {
+                //Console.WriteLine("");
+                //Console.WriteLine("--------------------");
+                //Console.WriteLine("CommunicationException= " + ex.Message);
+                //Console.WriteLine("CommunicationException-StackTrace= " + ex.StackTrace);
+                //Console.WriteLine("-------------------------");
+                //Console.WriteLine("");
+
+            }
+            catch (Exception ex)
             {
                 newException(new ExceptionOccured(ex));
             }

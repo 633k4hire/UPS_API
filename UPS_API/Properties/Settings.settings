@@ -14,5 +14,8 @@
     <Setting Name="ShippingAPI_WebReference2_TimeInTransitService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://wwwcie.ups.com/webservices/TimeInTransit</Value>
     </Setting>
+    <Setting Name="ShippingAPI_WebReferenceFreight_FreightShipService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://wwwcie.ups.com/webservices/FreightShip</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

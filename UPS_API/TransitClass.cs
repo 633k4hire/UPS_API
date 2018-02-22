@@ -187,33 +187,45 @@ namespace ShippingAPI
             public Transit.RESPONSE Response { get; set; }
         }
         public static List<Exception> Exceptions = new List<Exception>();
-        protected virtual void newException(ExceptionOccured e)
-        {
-            Exceptions.Add(e.Exception);
-            EventHandler<ExceptionOccured> handler = ExceptionListener;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
         public event EventHandler<ExceptionOccured> ExceptionListener;
+        public event EventHandler<SoapExceptionOccured> SoapExceptionListener;
         protected virtual void newSoapException(SoapExceptionOccured e)
         {
-            Exceptions.Add(e.Exception);
-            EventHandler<SoapExceptionOccured> handler = SoapExceptionListener;
-            if (handler != null)
+            try
             {
-                handler(this, e);
+                Exceptions.Add(e.Exception);
+                EventHandler<SoapExceptionOccured> handler = SoapExceptionListener;
+                if (handler != null)
+                {
+                    handler(this, e);
+                }
             }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
         }
-        public event EventHandler<SoapExceptionOccured> SoapExceptionListener;
+        protected virtual void newException(ExceptionOccured e)
+        {
+            try
+            {
+                Exceptions.Add(e.Exception);
+                EventHandler<ExceptionOccured> handler = ExceptionListener;
+                if (handler != null)
+                {
+                    handler(this, e);
+                }
+            }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
+        }
         protected virtual void ReturnReady(ReturnEvent obj)
         {
-            EventHandler<ReturnEvent> handler = ReturnListener;
-            if (handler != null)
+            try
             {
-                handler(this, obj);
+                EventHandler<ReturnEvent> handler = ReturnListener;
+                if (handler != null)
+                {
+                    handler(this, obj);
+                }
             }
+            catch (Exception ex) { newException(new ExceptionOccured(ex)); }
         }
         public event EventHandler<ReturnEvent> ReturnListener;
         public Transit()
@@ -471,11 +483,17 @@ namespace ShippingAPI
 
         private void TntService_ProcessTimeInTransitCompleted(object sender, ProcessTimeInTransitCompletedEventArgs e)
         {
-            RESPONSE responce = new RESPONSE();
-            Exceptions.Add(e.Error);
-            responce.Exceptions = Exceptions;
-            responce.Response = tntResponse = e.Result;
-            ReturnReady(new ReturnEvent(responce));
+            try
+            {
+                RESPONSE responce = new RESPONSE();
+                Exceptions.Add(e.Error);
+                responce.Exceptions = Exceptions;
+                responce.Response = tntResponse = e.Result;
+                ReturnReady(new ReturnEvent(responce));
+            }catch(Exception ex)
+            {
+                newException(new ExceptionOccured(ex));
+            }
             //Console.WriteLine("");
             //Console.WriteLine("Response Code: " + tntResponse.Response.ResponseStatus.Code + " :: " + (tntResponse.Response.ResponseStatus.Description));
             //Console.WriteLine("");
